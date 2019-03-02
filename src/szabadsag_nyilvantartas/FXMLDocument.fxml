@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1">
+  <tabs>
+    <Tab text="Dolgozók">
+         <content>
+            <VBox>
+               <children>
+                  <GridPane hgap="10.0" vgap="10.0">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" minWidth="25.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="110.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Név:" />
+                        <Label text="Születési dátum:" GridPane.columnIndex="2" />
+                        <Label text="Gyermekek száma:" GridPane.columnIndex="4" />
+                        <TextField fx:id="txtNev" GridPane.columnIndex="1" />
+                        <DatePicker fx:id="dpSzulDatum" GridPane.columnIndex="3" />
+                        <ComboBox fx:id="cbGyerekDB" prefWidth="150.0" GridPane.columnIndex="5" />
+                        <Button mnemonicParsing="false" onAction="#ujDolgozo" text="Új dolgozó" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Button mnemonicParsing="false" onAction="#modositDolgozo" text="Módosít" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Button mnemonicParsing="false" onAction="#torolDolgozo" text="Töröl" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </GridPane>
+                  <TableView fx:id="tblDolgozok">
+                    <columns>
+                      <TableColumn fx:id="oNev" prefWidth="125.0" text="Név" />
+                      <TableColumn fx:id="oSzulDatum" prefWidth="125.0" text="Születési dátum" />
+                        <TableColumn fx:id="oGyerekDB" prefWidth="125.0" text="Gyerekek száma" />
+                        <TableColumn fx:id="oEvesSzabi" prefWidth="125.0" text="Éves szabadság keret" />
+                        <TableColumn fx:id="oMaradekSzabi" prefWidth="125.0" text="Maradék szabadság" />
+                        <TableColumn fx:id="oFizuNelkul" prefWidth="125.0" text="Fizetés nélküli szabadság" />
+                    </columns>
+                  </TableView>
+               </children>
+            </VBox>
+         </content></Tab>
+      <Tab text="Szabadságok">
+         <content>
+            <VBox>
+               <children>
+                  <GridPane hgap="10.0" vgap="10.0">
+                     <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" minWidth="25.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="110.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Label text="Név:" />
+                        <Label text="Szabadság kezdete:" GridPane.columnIndex="2" />
+                        <Label text="Szabadság vége:" GridPane.columnIndex="4" />
+                        <DatePicker fx:id="dpSzabiKezdet" GridPane.columnIndex="3" />
+                        <Button mnemonicParsing="false" onAction="#ujSzabadsag" text="Új szabadság" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Button mnemonicParsing="false" onAction="#modositSzabadsag" text="Módosít" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Button mnemonicParsing="false" onAction="#torolSzabadsag" text="Töröl" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <DatePicker fx:id="dbSzabiVege" GridPane.columnIndex="5" />
+                        <ComboBox fx:id="cbNev" prefWidth="150.0" GridPane.columnIndex="1" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </GridPane>
+                  <TableView fx:id="tblSzabadsagok">
+                     <columns>
+                        <TableColumn fx:id="oNevSz" prefWidth="150.0" text="Név" />
+                        <TableColumn fx:id="oSzabiKezdet" prefWidth="150.0" text="Szabadság kezdete" />
+                        <TableColumn fx:id="oSzabiVege" prefWidth="150.0" text="Szabadság vége" />
+                        <TableColumn fx:id="oSzabiHossza" prefWidth="150.0" text="Szabadság hossza" />
+                     </columns>
+                  </TableView>
+               </children>
+            </VBox>
+         </content>
+      </Tab>
+      <Tab text="Beállítások" />
+  </tabs>
+</TabPane>
