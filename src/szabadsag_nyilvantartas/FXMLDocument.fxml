@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="szabadsag_nyilvantartas.FXMLDocumentController">
   <tabs>
     <Tab text="Dolgozók">
          <content>
@@ -87,7 +87,7 @@
                         <Button mnemonicParsing="false" onAction="#ujSzabadsag" text="Új szabadság" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                         <Button mnemonicParsing="false" onAction="#modositSzabadsag" text="Módosít" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                         <Button mnemonicParsing="false" onAction="#torolSzabadsag" text="Töröl" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                        <DatePicker fx:id="dbSzabiVege" GridPane.columnIndex="5" />
+                        <DatePicker fx:id="dpSzabiVege" GridPane.columnIndex="5" />
                         <ComboBox fx:id="cbNev" prefWidth="150.0" GridPane.columnIndex="1" />
                      </children>
                      <VBox.margin>
