@@ -85,7 +85,7 @@ public class FXMLDocumentController implements Initializable {
             int id = tblDolgozok.getItems().get(i).getId();
             dolgozoDB.dolgozo_modositas(id, txtNev.getText(), dpSzulDatum.getValue().toString(), cbGyerekDB.getValue());
             dolgozoDB.dolgozo_lista(tblDolgozok.getItems(),cbNev.getItems());
-            
+            tblDolgozok.getSelectionModel().select(i);
         }
     }
 
@@ -96,6 +96,8 @@ public class FXMLDocumentController implements Initializable {
             int id = tblSzabadsagok.getItems().get(i).getId();
             szabadsagDB.szabadsag_modositas(id, cbNev.getValue(), dpSzabiKezdet.getValue().toString(), dpSzabiVege.getValue().toString());
             szabadsagDB.szabadsag_lista(tblSzabadsagok.getItems());
+            dolgozoDB.dolgozo_lista(tblDolgozok.getItems(), cbNev.getItems());
+            tblSzabadsagok.getSelectionModel().select(i);
         }
     }
 
@@ -106,6 +108,7 @@ public class FXMLDocumentController implements Initializable {
             int id = tblDolgozok.getItems().get(i).getId();
             dolgozoDB.dolgozo_torles(id);
             dolgozoDB.dolgozo_lista(tblDolgozok.getItems(),cbNev.getItems());
+            szabadsagDB.szabadsag_lista(tblSzabadsagok.getItems());
             int utolso = tblDolgozok.getItems().size()-1;
             if (i <= utolso)
                 tblDolgozok.getSelectionModel().select(i);
@@ -162,6 +165,9 @@ public class FXMLDocumentController implements Initializable {
         oMaradekSzabi.setCellValueFactory(new PropertyValueFactory<>("maradekSzabadsag"));
         oFizuNelkul.setCellValueFactory(new PropertyValueFactory<>("fizetesNelkuli"));
         
+        dpSzulDatum.setValue(LocalDate.parse("1980-01-01"));
+        cbGyerekDB.setValue(0);
+        
         dolgozoDB.dolgozo_lista(tblDolgozok.getItems(), cbNev.getItems());
         
         tblDolgozok.getSelectionModel().selectedIndexProperty().addListener((o,regi,uj) -> dolgozok_tablabol(uj.intValue()));
@@ -170,6 +176,9 @@ public class FXMLDocumentController implements Initializable {
         oSzabiKezdet.setCellValueFactory(new PropertyValueFactory<>("szabiKezdete"));
         oSzabiVege.setCellValueFactory(new PropertyValueFactory<>("szabiVege"));
         oSzabiHossza.setCellValueFactory(new PropertyValueFactory<>("szabiHossza"));
+        
+        dpSzabiKezdet.setValue(LocalDate.now());
+        dpSzabiVege.setValue(dpSzabiKezdet.getValue());
         
         szabadsagDB.szabadsag_lista(tblSzabadsagok.getItems());
         

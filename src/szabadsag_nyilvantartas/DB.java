@@ -48,7 +48,7 @@ public class DB {
     }
     
     public void szabadsag_lista (ObservableList<Szabadsag> tabla) { //összes sabadság listázása
-        String s = "SELECT szabadsagok.id,dolgozok.nev,szabadsag_kezdete,szabadsag_vege,szabadsag_hossza FROM szabadsagok JOIN dolgozok ON szabadsagok.dolgozoid=dolgozok.id;;";
+        String s = "SELECT szabadsagok.id,dolgozok.nev,szabadsag_kezdete,szabadsag_vege,szabadsag_hossza FROM szabadsagok JOIN dolgozok ON szabadsagok.dolgozoid=dolgozok.id ORDER BY szabadsagok.id;";
         try (Connection kapcs = DriverManager.getConnection(dbUrl, user, pass);
                 PreparedStatement ekp = kapcs.prepareStatement(s)) {
             ResultSet eredmeny = ekp.executeQuery();
@@ -203,6 +203,31 @@ public class DB {
     }
     
         public void szabadsag_modositas(int id,String nev, String szabikezdete, String szabivege){
+        
+        
+        //A szabadság eredeti dátumainak lekérdezése
+        String regiSzabiKezdete = ""; 
+        String regiSzabiVege = ""; 
+        String sz = "SELECT szabadsag_kezdete,szabadsag_vege FROM szabadsagok WHERE id = ?;";    
+        try (Connection kapcs = DriverManager.getConnection(dbUrl, user, pass);
+                PreparedStatement ekp = kapcs.prepareStatement(sz)) {
+            ekp.setInt(1, id);
+            ResultSet eredmeny = ekp.executeQuery();
+            eredmeny.next();
+            regiSzabiKezdete = eredmeny.getString(1);
+            regiSzabiVege = eredmeny.getString(2);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }    
+        
+        if (!(szabikezdete.equals(regiSzabiKezdete) && szabivege.equals(regiSzabiVege))) {
+                    int regiSzabiHossz = szabadsagHossz(regiSzabiKezdete, regiSzabiVege);
+                    int szabiKulonbseg = regiSzabiHossz - szabadsagHossz(szabikezdete, szabivege);
+                    maradek_szabadsag_modositas(nev, szabiKulonbseg);
+                }
+        
+        
+        
         //szabadságok modosítása
         String s = "UPDATE szabadsagok SET dolgozoid = (SELECT id FROM dolgozok WHERE nev = ?),szabadsag_kezdete=?,szabadsag_vege=?,szabadsag_hossza = ? WHERE id =?;";
         try (Connection kapcs = DriverManager.getConnection(dbUrl, user, pass);
@@ -252,23 +277,28 @@ public class DB {
                 szabihossza -= hetveginapok;
             }
             //extranapok vizsgálata
+            
             int extranap = 0;
             String zs = "SELECT ertek FROM extranapok WHERE datum BETWEEN ? AND ?";
             try (Connection kapcs = DriverManager.getConnection(dbUrl, user, pass);
-                    PreparedStatement ekp = kapcs.prepareStatement(zs)) {
+                PreparedStatement ekp = kapcs.prepareStatement(zs)) {
                 ekp.setString(1, szabistart);
                 ekp.setString(2, szabivege);
                 ResultSet eredmeny = ekp.executeQuery();
-                eredmeny.next();
-                extranap = eredmeny.getInt(1);
+                if (eredmeny.next())
+                    if (!eredmeny.wasNull()){
+                        extranap += eredmeny.getInt(1);
+                        szabihossza += extranap;
+                    } 
+                    
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
             }
-            szabihossza += extranap;
+            
+            
         
-        }
+        } 
             return szabihossza;
         } 
         
-    
 }
