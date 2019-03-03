@@ -111,7 +111,9 @@ public class FXMLDocumentController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //dolgozók tábla        
+        //dolgozók tábla
+        cbGyerekDB.getItems().addAll(0,1,2,3,4,5,6,7,8,9);
+        
         oNev.setCellValueFactory(new PropertyValueFactory<>("nev"));
         oSzulDatum.setCellValueFactory(new PropertyValueFactory<>("szuletesiDatum"));
         oGyerekDB.setCellValueFactory(new PropertyValueFactory<>("gyerekDB"));
