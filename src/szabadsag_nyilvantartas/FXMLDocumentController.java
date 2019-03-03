@@ -80,32 +80,73 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     void modositDolgozo() {
-
+        int i = tblDolgozok.getSelectionModel().getSelectedIndex();
+        if (i > -1) {
+            int id = tblDolgozok.getItems().get(i).getId();
+            dolgozoDB.dolgozo_modositas(id, txtNev.getText(), dpSzulDatum.getValue().toString(), cbGyerekDB.getValue());
+            dolgozoDB.dolgozo_lista(tblDolgozok.getItems(),cbNev.getItems());
+            
+        }
     }
 
     @FXML
     void modositSzabadsag() {
-
+        int i = tblSzabadsagok.getSelectionModel().getFocusedIndex();
+        if (i > -1){
+            int id = tblSzabadsagok.getItems().get(i).getId();
+            szabadsagDB.szabadsag_modositas(id, cbNev.getValue(), dpSzabiKezdet.getValue().toString(), dpSzabiVege.getValue().toString());
+            szabadsagDB.szabadsag_lista(tblSzabadsagok.getItems());
+        }
     }
 
     @FXML
     void torolDolgozo() {
-
+        int i = tblDolgozok.getSelectionModel().getSelectedIndex();
+        if (i > -1) {
+            int id = tblDolgozok.getItems().get(i).getId();
+            dolgozoDB.dolgozo_torles(id);
+            dolgozoDB.dolgozo_lista(tblDolgozok.getItems(),cbNev.getItems());
+            int utolso = tblDolgozok.getItems().size()-1;
+            if (i <= utolso)
+                tblDolgozok.getSelectionModel().select(i);
+            else if (i > 0)
+                tblDolgozok.getSelectionModel().select(i-1);
+        }
+    
     }
 
     @FXML
     void torolSzabadsag() {
-
+        int i = tblSzabadsagok.getSelectionModel().getSelectedIndex();
+        if (i > -1) {
+            int id = tblSzabadsagok.getItems().get(i).getId();
+            int szabiHossza = tblSzabadsagok.getItems().get(i).getSzabiHossza();
+            String nev = tblSzabadsagok.getItems().get(i).getNev();
+            szabadsagDB.maradek_szabadsag_modositas(nev,szabiHossza);
+            szabadsagDB.szabadsag_torles(id);
+            szabadsagDB.szabadsag_lista(tblSzabadsagok.getItems());
+            dolgozoDB.dolgozo_lista(tblDolgozok.getItems(), cbNev.getItems());
+            int utolso = tblSzabadsagok.getItems().size()-1;
+            if (i <= utolso)
+                tblSzabadsagok.getSelectionModel().select(i);
+            else
+                tblSzabadsagok.getSelectionModel().select(i-1);
+            
+        }
+        
     }
 
     @FXML
     void ujDolgozo() {
-
+        dolgozoDB.ujdolgozo(txtNev.getText(), dpSzulDatum.getValue().toString(), cbGyerekDB.getValue());
+        dolgozoDB.dolgozo_lista(tblDolgozok.getItems(), cbNev.getItems());
     }
 
     @FXML
     void ujSzabadsag() {
-
+        szabadsagDB.uj_szabadsag(cbNev.getValue(), dpSzabiKezdet.getValue().toString(), dpSzabiVege.getValue().toString());
+        szabadsagDB.szabadsag_lista(tblSzabadsagok.getItems());
+        dolgozoDB.dolgozo_lista(tblDolgozok.getItems(), cbNev.getItems());
     }
     
     
