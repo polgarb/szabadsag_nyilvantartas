@@ -8,7 +8,6 @@ package szabadsag_nyilvantartas;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -101,8 +100,7 @@ public class FXMLDocumentController implements Initializable {
                 alert.setHeaderText(null);
                 alert.setContentText("A szabadság vége nem lehet korábbi dátum");
                 alert.showAndWait();
-            } else {
-                if (szabadsagDB.szabinVanE(cbNev.getValue(), dpSzabiKezdet.getValue(), dpSzabiVege.getValue(), id)) {
+            } else if (szabadsagDB.szabinVanE(cbNev.getValue(), dpSzabiKezdet.getValue(), dpSzabiVege.getValue(), id)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Hibás Dátum");
                 alert.setHeaderText(null);
@@ -113,8 +111,8 @@ public class FXMLDocumentController implements Initializable {
                 szabadsagDB.szabadsag_lista(tblSzabadsagok.getItems());
                 dolgozoDB.dolgozo_lista(tblDolgozok.getItems(), cbNev.getItems());
                 tblSzabadsagok.getSelectionModel().select(i);
-                }
-                }
+            }
+
         }
     }
 
@@ -172,19 +170,18 @@ public class FXMLDocumentController implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText("A szabadság vége nem lehet korábbi dátum");
             alert.showAndWait();
+        } else if (szabadsagDB.szabinVanE(cbNev.getValue(), dpSzabiKezdet.getValue(), dpSzabiVege.getValue(), 0)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Hibás Dátum");
+            alert.setHeaderText(null);
+            alert.setContentText("Már szabadságon van");
+            alert.showAndWait();
         } else {
-            if (szabadsagDB.szabinVanE(cbNev.getValue(), dpSzabiKezdet.getValue(), dpSzabiVege.getValue(), 0)) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Hibás Dátum");
-                alert.setHeaderText(null);
-                alert.setContentText("Már szabadságon van");
-                alert.showAndWait();
-            } else {
-                szabadsagDB.uj_szabadsag(cbNev.getValue(), dpSzabiKezdet.getValue().toString(), dpSzabiVege.getValue().toString());
-                szabadsagDB.szabadsag_lista(tblSzabadsagok.getItems());
-                dolgozoDB.dolgozo_lista(tblDolgozok.getItems(), cbNev.getItems());
-            }
+            szabadsagDB.uj_szabadsag(cbNev.getValue(), dpSzabiKezdet.getValue().toString(), dpSzabiVege.getValue().toString());
+            szabadsagDB.szabadsag_lista(tblSzabadsagok.getItems());
+            dolgozoDB.dolgozo_lista(tblDolgozok.getItems(), cbNev.getItems());
         }
+
     }
 
     @Override
