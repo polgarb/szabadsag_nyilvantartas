@@ -183,6 +183,34 @@ public class FXMLDocumentController implements Initializable {
         }
 
     }
+    
+        @FXML
+    private DatePicker dpExtraNap;
+
+    @FXML
+    private ComboBox<String> cbDatumTipus;
+
+    @FXML
+    private TableView<ExtraDatum> tblExtraNap;
+
+    @FXML
+    private TableColumn<ExtraDatum, String> oExtraDatum;
+
+    @FXML
+    private TableColumn<ExtraDatum, String> oExtraTipus;
+
+    @FXML
+    void extradatum_hozzaad() {
+        extradatumDB.uj_extranap(dpExtraNap.getValue().toString(), cbDatumTipus.getValue());
+        extradatumDB.extranap_lista(tblExtraNap.getItems());
+        
+    }
+
+    @FXML
+    void extradatum_torol() {
+
+    }
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -214,10 +242,21 @@ public class FXMLDocumentController implements Initializable {
         szabadsagDB.szabadsag_lista(tblSzabadsagok.getItems());
 
         tblSzabadsagok.getSelectionModel().selectedIndexProperty().addListener((o, regi, uj) -> szabadsagok_tablabol(uj.intValue()));
+        
+        //extranap tábla
+        cbDatumTipus.getItems().addAll("Munkaszüneti nap","Ledolgozás, áthelyezett munkanap");
+        
+        oExtraDatum.setCellValueFactory(new PropertyValueFactory<>("datum"));
+        oExtraTipus.setCellValueFactory(new PropertyValueFactory<>("tipus"));
+        
+        extradatumDB.extranap_lista(tblExtraNap.getItems());
+        
+        tblExtraNap.getSelectionModel().selectedIndexProperty().addListener((o, regi, uj) -> extranap_tablabol(uj.intValue()));
     }
 
     DB dolgozoDB = new DB();
     DB szabadsagDB = new DB();
+    DB extradatumDB = new DB();
 
     private void dolgozok_tablabol(int i) {
         if (i == -1) {
@@ -237,6 +276,16 @@ public class FXMLDocumentController implements Initializable {
         cbNev.setValue(sz.getNev());
         dpSzabiKezdet.setValue(LocalDate.parse(sz.getSzabiKezdete()));
         dpSzabiVege.setValue(LocalDate.parse(sz.getSzabiVege()));
+    }
+    
+    private void extranap_tablabol(int i) {
+        if (i == -1) {
+            return;
+        }
+        ExtraDatum e = tblExtraNap.getItems().get(i);
+        cbDatumTipus.setValue(e.getTipus());
+        dpExtraNap.setValue(LocalDate.parse(e.getDatum()));
+        
     }
 
 }
