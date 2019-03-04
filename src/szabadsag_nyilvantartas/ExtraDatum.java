@@ -10,6 +10,7 @@ package szabadsag_nyilvantartas;
  * @author Polgár Béla
  */
 public class ExtraDatum {
+
     int id;
     String datum;
     int ertek;
@@ -29,14 +30,13 @@ public class ExtraDatum {
     public void setId(int id) {
         this.id = id;
     }
-    
-    
-    
-    public void setTipus(int ertek){
-        if (ertek == -1) 
+
+    public void setTipus(int ertek) {
+        if (ertek == -1) {
             tipus = "Munkaszüneti nap";
-        else
+        } else {
             tipus = "Ledolgozás, áthelyezett munkanap";
+        }
     }
 
     public String getDatum() {
@@ -52,10 +52,11 @@ public class ExtraDatum {
     }
 
     public void setErtek(String tipus) {
-        if (tipus.equals("Munkaszüneti nap"))
-                ertek = -1;
-        else 
+        if (tipus.equals("Munkaszüneti nap")) {
+            ertek = -1;
+        } else {
             ertek = 1;
+        }
     }
 
     public String getTipus() {
@@ -65,7 +66,5 @@ public class ExtraDatum {
     public void setTipus(String tipus) {
         this.tipus = tipus;
     }
-    
-    
-    
+
 }

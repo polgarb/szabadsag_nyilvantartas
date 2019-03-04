@@ -10,6 +10,7 @@ package szabadsag_nyilvantartas;
  * @author Polgár Béla
  */
 public class Dolgozo {
+
     private int id;
     private String nev;
     private String szuletesiDatum;
@@ -83,6 +84,5 @@ public class Dolgozo {
     public void setFizetesNelkuli(int fizetesNelkuli) {
         this.fizetesNelkuli = fizetesNelkuli;
     }
-    
-    
+
 }

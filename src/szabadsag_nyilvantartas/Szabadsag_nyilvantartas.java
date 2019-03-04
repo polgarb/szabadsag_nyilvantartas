@@ -16,11 +16,11 @@ import javafx.stage.Stage;
  * @author Polgár Béla
  */
 public class Szabadsag_nyilvantartas extends Application {
-    
+
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        
+
         Scene scene = new Scene(root);
         stage.setTitle("Szabadság nyilvántartó 2019");
         stage.setScene(scene);
@@ -33,5 +33,5 @@ public class Szabadsag_nyilvantartas extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }

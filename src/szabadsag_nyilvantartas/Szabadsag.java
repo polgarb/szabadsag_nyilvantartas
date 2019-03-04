@@ -10,6 +10,7 @@ package szabadsag_nyilvantartas;
  * @author Polgár Béla
  */
 public class Szabadsag {
+
     private int id;
     private String nev;
     private String szabiKezdete;
@@ -63,6 +64,5 @@ public class Szabadsag {
     public void setSzabiHossza(int szabiHossza) {
         this.szabiHossza = szabiHossza;
     }
-    
-    
+
 }

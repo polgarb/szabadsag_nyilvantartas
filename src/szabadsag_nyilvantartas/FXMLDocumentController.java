@@ -183,8 +183,8 @@ public class FXMLDocumentController implements Initializable {
         }
 
     }
-    
-        @FXML
+
+    @FXML
     private DatePicker dpExtraNap;
 
     @FXML
@@ -203,19 +203,18 @@ public class FXMLDocumentController implements Initializable {
     void extradatum_hozzaad() {
         extradatumDB.uj_extranap(dpExtraNap.getValue().toString(), cbDatumTipus.getValue());
         extradatumDB.extranap_lista(tblExtraNap.getItems());
-        
+
     }
 
     @FXML
     void extradatum_torol() {
         int i = tblExtraNap.getSelectionModel().getSelectedIndex();
-        System.out.println(i);
+
         if (i > -1) {
             int id = tblExtraNap.getItems().get(i).getId();
-            System.out.println(id);
             extradatumDB.extranap_torles(id);
             extradatumDB.extranap_lista(tblExtraNap.getItems());
-            
+
             int utolso = tblExtraNap.getItems().size() - 1;
             if (i <= utolso) {
                 tblExtraNap.getSelectionModel().select(i);
@@ -224,7 +223,6 @@ public class FXMLDocumentController implements Initializable {
             }
         }
     }
-    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -256,15 +254,15 @@ public class FXMLDocumentController implements Initializable {
         szabadsagDB.szabadsag_lista(tblSzabadsagok.getItems());
 
         tblSzabadsagok.getSelectionModel().selectedIndexProperty().addListener((o, regi, uj) -> szabadsagok_tablabol(uj.intValue()));
-        
+
         //extranap tábla
-        cbDatumTipus.getItems().addAll("Munkaszüneti nap","Ledolgozás, áthelyezett munkanap");
-        
+        cbDatumTipus.getItems().addAll("Munkaszüneti nap", "Ledolgozás, áthelyezett munkanap");
+
         oExtraDatum.setCellValueFactory(new PropertyValueFactory<>("datum"));
         oExtraTipus.setCellValueFactory(new PropertyValueFactory<>("tipus"));
-        
+
         extradatumDB.extranap_lista(tblExtraNap.getItems());
-        
+
         tblExtraNap.getSelectionModel().selectedIndexProperty().addListener((o, regi, uj) -> extranap_tablabol(uj.intValue()));
     }
 
@@ -291,7 +289,7 @@ public class FXMLDocumentController implements Initializable {
         dpSzabiKezdet.setValue(LocalDate.parse(sz.getSzabiKezdete()));
         dpSzabiVege.setValue(LocalDate.parse(sz.getSzabiVege()));
     }
-    
+
     private void extranap_tablabol(int i) {
         if (i == -1) {
             return;
@@ -299,7 +297,7 @@ public class FXMLDocumentController implements Initializable {
         ExtraDatum e = tblExtraNap.getItems().get(i);
         cbDatumTipus.setValue(e.getTipus());
         dpExtraNap.setValue(LocalDate.parse(e.getDatum()));
-        
+
     }
 
 }

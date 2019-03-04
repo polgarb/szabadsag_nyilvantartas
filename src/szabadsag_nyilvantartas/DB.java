@@ -295,8 +295,7 @@ public class DB {
 
         return szabihossza;
     }
-    
-    
+
     public boolean szabinVanE(String nev, LocalDate szabiStart, LocalDate szabiVege, int id) {
         // Ellenőrzés, hogy a kapott dátum intervallum beleesik e valamilyen meglévő szabiba (Ha igen akkor true -t ad vissza)
         boolean naptar[] = new boolean[366];
@@ -310,7 +309,7 @@ public class DB {
                 // az összes szabi tömbbe írása
                 LocalDate szabiS = LocalDate.parse(eredmeny.getString(1), DateTimeFormatter.ISO_DATE);
                 LocalDate szabiV = LocalDate.parse(eredmeny.getString(2), DateTimeFormatter.ISO_DATE);
-                
+
                 for (int i = szabiS.getDayOfYear(); i < szabiV.getDayOfYear() + 1; i++) {
                     System.out.println(i);
                     naptar[i] = true;
@@ -329,8 +328,8 @@ public class DB {
         }
         return valtozo;
     }
-    
-        public void extranap_lista(ObservableList<ExtraDatum> tabla) { //összes sabadság listázása
+
+    public void extranap_lista(ObservableList<ExtraDatum> tabla) { //összes sabadság listázása
         String s = "SELECT id,datum,ertek FROM extranapok;";
         try (Connection kapcs = DriverManager.getConnection(dbUrl, user, pass);
                 PreparedStatement ekp = kapcs.prepareStatement(s)) {
@@ -346,15 +345,16 @@ public class DB {
             System.out.println(ex.getMessage());
         }
     }
-        
-            public void uj_extranap(String datum, String tipus) {
+
+    public void uj_extranap(String datum, String tipus) {
         //új 
         int ertek = 0;
-        if (tipus.equals("Munkaszüneti nap"))
-                ertek = -1;
-        else 
+        if (tipus.equals("Munkaszüneti nap")) {
+            ertek = -1;
+        } else {
             ertek = 1;
-        
+        }
+
         String s = "INSERT INTO extranapok (datum,ertek) VALUES(?,?);";
         try (Connection kapcs = DriverManager.getConnection(dbUrl, user, pass);
                 PreparedStatement ekp = kapcs.prepareStatement(s)) {
@@ -366,7 +366,7 @@ public class DB {
             System.out.println(ex.getMessage());
         }
     }
-            
+
     public void extranap_torles(int id) {
         //extranap törlése
         String s = "DELETE FROM extranapok WHERE id = ?;";
@@ -381,7 +381,7 @@ public class DB {
 
     public static void main(String[] args) {
         DB ab = new DB();
-        System.out.println(ab.szabinVanE("Polgár Béla", LocalDate.parse("2019-03-05"), LocalDate.parse("2019-03-05"),0));
+        System.out.println(ab.szabinVanE("Polgár Béla", LocalDate.parse("2019-03-05"), LocalDate.parse("2019-03-05"), 0));
 
     }
 }
