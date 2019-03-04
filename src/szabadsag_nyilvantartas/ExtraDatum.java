@@ -10,14 +10,24 @@ package szabadsag_nyilvantartas;
  * @author Polgár Béla
  */
 public class ExtraDatum {
+    int id;
     String datum;
     int ertek;
     String tipus;
 
-    public ExtraDatum(String datum, int ertek) {
+    public ExtraDatum(int id, String datum, int ertek) {
+        this.id = id;
         this.datum = datum;
         this.ertek = ertek;
         setTipus(ertek);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
     

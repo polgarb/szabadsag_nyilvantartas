@@ -208,7 +208,21 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     void extradatum_torol() {
-
+        int i = tblExtraNap.getSelectionModel().getSelectedIndex();
+        System.out.println(i);
+        if (i > -1) {
+            int id = tblExtraNap.getItems().get(i).getId();
+            System.out.println(id);
+            extradatumDB.extranap_torles(id);
+            extradatumDB.extranap_lista(tblExtraNap.getItems());
+            
+            int utolso = tblExtraNap.getItems().size() - 1;
+            if (i <= utolso) {
+                tblExtraNap.getSelectionModel().select(i);
+            } else if (i > 0) {
+                tblExtraNap.getSelectionModel().select(i - 1);
+            }
+        }
     }
     
 

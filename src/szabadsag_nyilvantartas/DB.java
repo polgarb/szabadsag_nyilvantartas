@@ -331,15 +331,16 @@ public class DB {
     }
     
         public void extranap_lista(ObservableList<ExtraDatum> tabla) { //összes sabadság listázása
-        String s = "SELECT datum,ertek FROM extranapok;";
+        String s = "SELECT id,datum,ertek FROM extranapok;";
         try (Connection kapcs = DriverManager.getConnection(dbUrl, user, pass);
                 PreparedStatement ekp = kapcs.prepareStatement(s)) {
             ResultSet eredmeny = ekp.executeQuery();
             tabla.clear();
             while (eredmeny.next()) {
                 tabla.add(new ExtraDatum(
-                        eredmeny.getString(1),
-                        eredmeny.getInt(2)));
+                        eredmeny.getInt(1),
+                        eredmeny.getString(2),
+                        eredmeny.getInt(3)));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -361,6 +362,18 @@ public class DB {
             ekp.setInt(2, ertek);
             ekp.executeUpdate();
 
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+            
+    public void extranap_torles(int id) {
+        //extranap törlése
+        String s = "DELETE FROM extranapok WHERE id = ?;";
+        try (Connection kapcs = DriverManager.getConnection(dbUrl, user, pass);
+                PreparedStatement ekp = kapcs.prepareStatement(s)) {
+            ekp.setInt(1, id);
+            ekp.executeUpdate();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
