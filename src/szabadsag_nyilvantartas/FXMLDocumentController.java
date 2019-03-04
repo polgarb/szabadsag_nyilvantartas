@@ -102,11 +102,19 @@ public class FXMLDocumentController implements Initializable {
                 alert.setContentText("A szabadság vége nem lehet korábbi dátum");
                 alert.showAndWait();
             } else {
+                if (szabadsagDB.szabinVanE(cbNev.getValue(), dpSzabiKezdet.getValue(), dpSzabiVege.getValue(), id)) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Hibás Dátum");
+                alert.setHeaderText(null);
+                alert.setContentText("Már szabadságon van");
+                alert.showAndWait();
+            } else {
                 szabadsagDB.szabadsag_modositas(id, cbNev.getValue(), dpSzabiKezdet.getValue().toString(), dpSzabiVege.getValue().toString());
                 szabadsagDB.szabadsag_lista(tblSzabadsagok.getItems());
                 dolgozoDB.dolgozo_lista(tblDolgozok.getItems(), cbNev.getItems());
                 tblSzabadsagok.getSelectionModel().select(i);
-            }
+                }
+                }
         }
     }
 
@@ -165,9 +173,17 @@ public class FXMLDocumentController implements Initializable {
             alert.setContentText("A szabadság vége nem lehet korábbi dátum");
             alert.showAndWait();
         } else {
-            szabadsagDB.uj_szabadsag(cbNev.getValue(), dpSzabiKezdet.getValue().toString(), dpSzabiVege.getValue().toString());
-            szabadsagDB.szabadsag_lista(tblSzabadsagok.getItems());
-            dolgozoDB.dolgozo_lista(tblDolgozok.getItems(), cbNev.getItems());
+            if (szabadsagDB.szabinVanE(cbNev.getValue(), dpSzabiKezdet.getValue(), dpSzabiVege.getValue(), 0)) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Hibás Dátum");
+                alert.setHeaderText(null);
+                alert.setContentText("Már szabadságon van");
+                alert.showAndWait();
+            } else {
+                szabadsagDB.uj_szabadsag(cbNev.getValue(), dpSzabiKezdet.getValue().toString(), dpSzabiVege.getValue().toString());
+                szabadsagDB.szabadsag_lista(tblSzabadsagok.getItems());
+                dolgozoDB.dolgozo_lista(tblDolgozok.getItems(), cbNev.getItems());
+            }
         }
     }
 

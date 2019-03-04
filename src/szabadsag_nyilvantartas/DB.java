@@ -252,49 +252,87 @@ public class DB {
         LocalDate szabiStart = LocalDate.parse(szabistart, DateTimeFormatter.ISO_DATE);
         LocalDate szabiVege = LocalDate.parse(szabivege, DateTimeFormatter.ISO_DATE);
         int szabihossza = 0;
-            //a dátumok hanyadik napok az évben
-            int kezdonap = szabiStart.getDayOfYear();
-            int vegenap = szabiVege.getDayOfYear();
-            //szabadság hosszának kiszámítása
-            szabihossza = vegenap - kezdonap + 1;
-            //van e benne hétége ,ha igen akkor ezek a napok levonása a szabiból
-            int szabistartaheten = szabiStart.getDayOfWeek().getValue();
-            if ((szabistartaheten + szabihossza) > 5) {
-                int x = 0;
-                int hetveginapok = 0;
-                for (int i = 0; i < szabihossza; i++) {
-                    x = szabiStart.getDayOfWeek().getValue() + i;
-                    if (x > 7) {
-                        x -= 7;
-                    }
-                    if (x == 6 || x == 7) {
-                        hetveginapok++;
-                    }
+        //a dátumok hanyadik napok az évben
+        int kezdonap = szabiStart.getDayOfYear();
+        int vegenap = szabiVege.getDayOfYear();
+        //szabadság hosszának kiszámítása
+        szabihossza = vegenap - kezdonap + 1;
+        //van e benne hétége ,ha igen akkor ezek a napok levonása a szabiból
+        int szabistartaheten = szabiStart.getDayOfWeek().getValue();
+        if ((szabistartaheten + szabihossza) > 5) {
+            int x = 0;
+            int hetveginapok = 0;
+            for (int i = 0; i < szabihossza; i++) {
+                x = szabiStart.getDayOfWeek().getValue() + i;
+                if (x > 7) {
+                    x -= 7;
                 }
-                szabihossza -= hetveginapok;
+                if (x == 6 || x == 7) {
+                    hetveginapok++;
+                }
             }
-            //extranapok vizsgálata
+            szabihossza -= hetveginapok;
+        }
+        //extranapok vizsgálata
 
-            int extranap = 0;
-            String zs = "SELECT ertek FROM extranapok WHERE datum BETWEEN ? AND ?";
-            try (Connection kapcs = DriverManager.getConnection(dbUrl, user, pass);
-                    PreparedStatement ekp = kapcs.prepareStatement(zs)) {
-                ekp.setString(1, szabistart);
-                ekp.setString(2, szabivege);
-                ResultSet eredmeny = ekp.executeQuery();
-                if (eredmeny.next()) {
-                    if (!eredmeny.wasNull()) {
-                        extranap += eredmeny.getInt(1);
-                        szabihossza += extranap;
-                    }
+        int extranap = 0;
+        String zs = "SELECT ertek FROM extranapok WHERE datum BETWEEN ? AND ?";
+        try (Connection kapcs = DriverManager.getConnection(dbUrl, user, pass);
+                PreparedStatement ekp = kapcs.prepareStatement(zs)) {
+            ekp.setString(1, szabistart);
+            ekp.setString(2, szabivege);
+            ResultSet eredmeny = ekp.executeQuery();
+            if (eredmeny.next()) {
+                if (!eredmeny.wasNull()) {
+                    extranap += eredmeny.getInt(1);
+                    szabihossza += extranap;
                 }
-
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
             }
 
-        
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
         return szabihossza;
     }
+    
+    
+    public boolean szabinVanE(String nev, LocalDate szabiStart, LocalDate szabiVege, int id) {
+        // Ellenőrzés, hogy a kapott dátum intervallum beleesik e valamilyen meglévő szabiba (Ha igen akkor true -t ad vissza)
+        boolean naptar[] = new boolean[366];
+        String s = "SELECT szabadsag_kezdete,szabadsag_vege  FROM szabadsagok WHERE dolgozoid = (SELECT id FROM dolgozok WHERE nev = ?) AND id != ?;";
+        try (Connection kapcs = DriverManager.getConnection(dbUrl, user, pass);
+                PreparedStatement ekp = kapcs.prepareStatement(s)) {
+            ekp.setString(1, nev);
+            ekp.setInt(2, id);
+            ResultSet eredmeny = ekp.executeQuery();
+            while (eredmeny.next()) {
+                // az összes szabi tömbbe írása
+                LocalDate szabiS = LocalDate.parse(eredmeny.getString(1), DateTimeFormatter.ISO_DATE);
+                LocalDate szabiV = LocalDate.parse(eredmeny.getString(2), DateTimeFormatter.ISO_DATE);
+                
+                for (int i = szabiS.getDayOfYear(); i < szabiV.getDayOfYear() + 1; i++) {
+                    System.out.println(i);
+                    naptar[i] = true;
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        int i = szabiStart.getDayOfYear();
+        boolean valtozo = false;
+        while (i <= szabiVege.getDayOfYear() && !valtozo) {
+            if (naptar[i]) {
+                valtozo = true;
+            }
+            i++;
+        }
+        return valtozo;
+    }
 
+    public static void main(String[] args) {
+        DB ab = new DB();
+        System.out.println(ab.szabinVanE("Polgár Béla", LocalDate.parse("2019-03-05"), LocalDate.parse("2019-03-05"),0));
+
+    }
 }
