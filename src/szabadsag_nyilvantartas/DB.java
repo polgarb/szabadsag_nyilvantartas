@@ -26,7 +26,7 @@ public class DB {
     final String pass = "";
 
     public void dolgozo_lista(ObservableList<Dolgozo> tabla, ObservableList<String> lista) { //dolgozók listázása
-        String s = "SELECT * FROM dolgozok;";
+        String s = "SELECT * FROM dolgozok ORDER BY nev;";
         try (Connection kapcs = DriverManager.getConnection(dbUrl, user, pass);
                 PreparedStatement ekp = kapcs.prepareStatement(s)) {
             ResultSet eredmeny = ekp.executeQuery();
@@ -248,33 +248,31 @@ public class DB {
      * @return
      */
     private int szabadsagHossz(String szabistart, String szabivege) {
-
+        //String átkonvertálása dátummá
         LocalDate szabiStart = LocalDate.parse(szabistart, DateTimeFormatter.ISO_DATE);
         LocalDate szabiVege = LocalDate.parse(szabivege, DateTimeFormatter.ISO_DATE);
-        int szabihossza = 0;
         //a dátumok hanyadik napok az évben
         int kezdonap = szabiStart.getDayOfYear();
         int vegenap = szabiVege.getDayOfYear();
         //szabadság hosszának kiszámítása
-        szabihossza = vegenap - kezdonap + 1;
+        int szabihossza = vegenap - kezdonap + 1;
         //van e benne hétége ,ha igen akkor ezek a napok levonása a szabiból
         int szabistartaheten = szabiStart.getDayOfWeek().getValue();
         if ((szabistartaheten + szabihossza) > 5) {
-            int x = 0;
+            int x = szabiStart.getDayOfWeek().getValue();
             int hetveginapok = 0;
             for (int i = 0; i < szabihossza; i++) {
-                x = szabiStart.getDayOfWeek().getValue() + i;
                 if (x > 7) {
                     x -= 7;
                 }
                 if (x == 6 || x == 7) {
                     hetveginapok++;
                 }
+                x ++;
             }
             szabihossza -= hetveginapok;
         }
         //extranapok vizsgálata
-
         int extranap = 0;
         String zs = "SELECT ertek FROM extranapok WHERE datum BETWEEN ? AND ?";
         try (Connection kapcs = DriverManager.getConnection(dbUrl, user, pass);
@@ -292,7 +290,6 @@ public class DB {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-
         return szabihossza;
     }
 
@@ -330,7 +327,7 @@ public class DB {
     }
 
     public void extranap_lista(ObservableList<ExtraDatum> tabla) { //összes sabadság listázása
-        String s = "SELECT id,datum,ertek FROM extranapok;";
+        String s = "SELECT id,datum,ertek FROM extranapok ORDER BY datum;";
         try (Connection kapcs = DriverManager.getConnection(dbUrl, user, pass);
                 PreparedStatement ekp = kapcs.prepareStatement(s)) {
             ResultSet eredmeny = ekp.executeQuery();
@@ -377,6 +374,24 @@ public class DB {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+    }
+    
+    public boolean vanEelegszabija (String nev, String szabiKezdete,String szabiVege){
+       String s = "SELECT maradek_szabadsag FROM dolgozok WHERE nev = ?;";
+       boolean vanelegszabija = false;
+       int maradekszabi = 0;
+       try (Connection kapcs = DriverManager.getConnection(dbUrl, user, pass);
+            PreparedStatement ekp = kapcs.prepareStatement(s)) {
+            ekp.setString(1, nev);
+            ResultSet eredmeny = ekp.executeQuery();
+            eredmeny.next();
+            maradekszabi = eredmeny.getInt(1);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+       if ((maradekszabi - szabadsagHossz(szabiKezdete, szabiVege)) < 0)
+           vanelegszabija = true;
+       return vanelegszabija;
     }
 
     public static void main(String[] args) {

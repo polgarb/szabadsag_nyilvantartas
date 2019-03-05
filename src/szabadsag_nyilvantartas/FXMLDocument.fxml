@@ -43,9 +43,9 @@
                         <TextField fx:id="txtNev" GridPane.columnIndex="1" />
                         <DatePicker fx:id="dpSzulDatum" GridPane.columnIndex="3" />
                         <ComboBox fx:id="cbGyerekDB" prefWidth="150.0" GridPane.columnIndex="5" />
-                        <Button mnemonicParsing="false" onAction="#ujDolgozo" text="Új dolgozó" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                        <Button mnemonicParsing="false" onAction="#modositDolgozo" text="Módosít" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                        <Button mnemonicParsing="false" onAction="#torolDolgozo" text="Töröl" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Button mnemonicParsing="false" onAction="#ujDolgozo" prefWidth="75.0" text="Új dolgozó" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Button mnemonicParsing="false" onAction="#modositDolgozo" prefWidth="75.0" text="Módosít" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Button mnemonicParsing="false" onAction="#torolDolgozo" prefWidth="75.0" text="Töröl" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -58,7 +58,6 @@
                         <TableColumn fx:id="oGyerekDB" prefWidth="125.0" text="Gyerekek száma" />
                         <TableColumn fx:id="oEvesSzabi" prefWidth="125.0" text="Éves szabadság keret" />
                         <TableColumn fx:id="oMaradekSzabi" prefWidth="125.0" text="Maradék szabadság" />
-                        <TableColumn fx:id="oFizuNelkul" prefWidth="125.0" text="Fizetés nélküli szabadság" />
                     </columns>
                   </TableView>
                </children>
@@ -86,9 +85,9 @@
                         <Label text="Szabadság kezdete:" GridPane.columnIndex="2" />
                         <Label text="Szabadság vége:" GridPane.columnIndex="4" />
                         <DatePicker fx:id="dpSzabiKezdet" GridPane.columnIndex="3" />
-                        <Button mnemonicParsing="false" onAction="#ujSzabadsag" text="Új szabadság" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                        <Button mnemonicParsing="false" onAction="#modositSzabadsag" text="Módosít" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                        <Button mnemonicParsing="false" onAction="#torolSzabadsag" text="Töröl" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Button mnemonicParsing="false" onAction="#ujSzabadsag" prefWidth="90.0" text="Új szabadság" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Button mnemonicParsing="false" onAction="#modositSzabadsag" prefWidth="90.0" text="Módosít" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Button mnemonicParsing="false" onAction="#torolSzabadsag" prefWidth="90.0" text="Töröl" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                         <DatePicker fx:id="dpSzabiVege" GridPane.columnIndex="5" />
                         <ComboBox fx:id="cbNev" prefWidth="150.0" GridPane.columnIndex="1" />
                      </children>
@@ -142,7 +141,7 @@
                         <Button mnemonicParsing="false" onAction="#extradatum_torol" text="Töröl" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                         <TableView fx:id="tblExtraNap" maxWidth="350.0" prefHeight="250.0" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.rowSpan="3">
                           <columns>
-                            <TableColumn fx:id="oExtraDatum" prefWidth="150.0" text="Dátum" />
+                            <TableColumn fx:id="oExtraDatum" prefWidth="125.0" text="Dátum" />
                             <TableColumn fx:id="oExtraTipus" prefWidth="190.0" text="Típus" />
                           </columns>
                         </TableView>

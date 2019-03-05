@@ -51,8 +51,8 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TableColumn<Dolgozo, Integer> oMaradekSzabi;
 
-    @FXML
-    private TableColumn<Dolgozo, Integer> oFizuNelkul;
+    //@FXML
+    //private TableColumn<Dolgozo, Integer> oFizuNelkul;
 
     @FXML
     private DatePicker dpSzabiKezdet;
@@ -176,6 +176,12 @@ public class FXMLDocumentController implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText("Már szabadságon van");
             alert.showAndWait();
+        } else if (szabadsagDB.vanEelegszabija(cbNev.getValue(), dpSzabiKezdet.getValue().toString(), dpSzabiVege.getValue().toString())) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Hibás Dátum");
+            alert.setHeaderText(null);
+            alert.setContentText("Nincs elég szabadsága");
+            alert.showAndWait();
         } else {
             szabadsagDB.uj_szabadsag(cbNev.getValue(), dpSzabiKezdet.getValue().toString(), dpSzabiVege.getValue().toString());
             szabadsagDB.szabadsag_lista(tblSzabadsagok.getItems());
@@ -234,7 +240,7 @@ public class FXMLDocumentController implements Initializable {
         oGyerekDB.setCellValueFactory(new PropertyValueFactory<>("gyerekDB"));
         oEvesSzabi.setCellValueFactory(new PropertyValueFactory<>("evesSzabadsag"));
         oMaradekSzabi.setCellValueFactory(new PropertyValueFactory<>("maradekSzabadsag"));
-        oFizuNelkul.setCellValueFactory(new PropertyValueFactory<>("fizetesNelkuli"));
+        //oFizuNelkul.setCellValueFactory(new PropertyValueFactory<>("fizetesNelkuli"));
 
         dpSzulDatum.setValue(LocalDate.parse("1980-01-01"));
         cbGyerekDB.setValue(0);
