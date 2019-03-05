@@ -6,7 +6,7 @@
 package szabadsag_nyilvantartas;
 
 /**
- *
+ * Egy szabadság adatai
  * @author Polgár Béla
  */
 public class Szabadsag {
@@ -16,6 +16,15 @@ public class Szabadsag {
     private String szabiKezdete;
     private String szabiVege;
     private int szabiHossza;
+    
+    /**
+     * 
+     * @param id a szabadság egyedi száma
+     * @param nev a szabadságon lévő neve
+     * @param szabiKezdete a szabadságának kezdete
+     * @param szabiVege a szabadságának vége
+     * @param szabiHossza a szabadság hossza (csak munkanapok számítanak)
+     */
 
     public Szabadsag(int id, String nev, String szabiKezdete, String szabiVege, int szabiHossza) {
         this.id = id;
@@ -24,7 +33,8 @@ public class Szabadsag {
         this.szabiVege = szabiVege;
         this.szabiHossza = szabiHossza;
     }
-
+    
+    
     public int getId() {
         return id;
     }

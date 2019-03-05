@@ -51,8 +51,6 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TableColumn<Dolgozo, Integer> oMaradekSzabi;
 
-    //@FXML
-    //private TableColumn<Dolgozo, Integer> oFizuNelkul;
     @FXML
     private DatePicker dpSzabiKezdet;
 
@@ -253,7 +251,7 @@ public class FXMLDocumentController implements Initializable {
         oGyerekDB.setCellValueFactory(new PropertyValueFactory<>("gyerekDB"));
         oEvesSzabi.setCellValueFactory(new PropertyValueFactory<>("evesSzabadsag"));
         oMaradekSzabi.setCellValueFactory(new PropertyValueFactory<>("maradekSzabadsag"));
-        //oFizuNelkul.setCellValueFactory(new PropertyValueFactory<>("fizetesNelkuli"));
+        
 
         dpSzulDatum.setValue(LocalDate.parse("1980-01-01"));
         cbGyerekDB.setValue(0);

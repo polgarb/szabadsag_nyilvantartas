@@ -6,7 +6,7 @@
 package szabadsag_nyilvantartas;
 
 /**
- *
+ * Egy dolgozó adatai 
  * @author Polgár Béla
  */
 public class Dolgozo {
@@ -18,15 +18,25 @@ public class Dolgozo {
     private int evesSzabadsag;
     private int maradekSzabadsag;
     private int fizetesNelkuli;
+    
+    /**
+     * 
+     * @param id egyedi sorszáma a dolgozónak
+     * @param nev a dolgozó neve
+     * @param szuletesiDatum a dolgozó születési dátuma
+     * @param gyerekDB a dolgozó gyermekeinek száma
+     * @param evesSzabadsag a dolgozó éves szabadságainak a száma
+     * @param maradekSzabadsag a dolgozó megmaradt szabadságainak száma
+     */
 
-    public Dolgozo(int id, String nev, String szuletesiDatum, int gyerekDB, int evesSzabadsag, int maradekSzabadsag, int fizetesNelkuli) {
+    public Dolgozo(int id, String nev, String szuletesiDatum, int gyerekDB, int evesSzabadsag, int maradekSzabadsag) {
         this.id = id;
         this.nev = nev;
         this.szuletesiDatum = szuletesiDatum;
         this.gyerekDB = gyerekDB;
         this.evesSzabadsag = evesSzabadsag;
         this.maradekSzabadsag = maradekSzabadsag;
-        this.fizetesNelkuli = fizetesNelkuli;
+        
     }
 
     public int getId() {
@@ -75,14 +85,6 @@ public class Dolgozo {
 
     public void setMaradekSzabadsag(int maradekSzabadsag) {
         this.maradekSzabadsag = maradekSzabadsag;
-    }
-
-    public int getFizetesNelkuli() {
-        return fizetesNelkuli;
-    }
-
-    public void setFizetesNelkuli(int fizetesNelkuli) {
-        this.fizetesNelkuli = fizetesNelkuli;
     }
 
 }
