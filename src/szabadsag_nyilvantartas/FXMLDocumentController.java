@@ -53,7 +53,6 @@ public class FXMLDocumentController implements Initializable {
 
     //@FXML
     //private TableColumn<Dolgozo, Integer> oFizuNelkul;
-
     @FXML
     private DatePicker dpSzabiKezdet;
 
@@ -105,6 +104,12 @@ public class FXMLDocumentController implements Initializable {
                 alert.setTitle("Hibás Dátum");
                 alert.setHeaderText(null);
                 alert.setContentText("Már szabadságon van");
+                alert.showAndWait();
+            } else if (szabadsagDB.vanEelegszabija(cbNev.getValue(), dpSzabiKezdet.getValue().toString(), dpSzabiVege.getValue().toString(), tblSzabadsagok.getItems().get(i).getSzabiHossza())) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Hibás Dátum");
+                alert.setHeaderText(null);
+                alert.setContentText("Nincs elég szabadsága");
                 alert.showAndWait();
             } else {
                 szabadsagDB.szabadsag_modositas(id, cbNev.getValue(), dpSzabiKezdet.getValue().toString(), dpSzabiVege.getValue().toString());
@@ -158,8 +163,16 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     void ujDolgozo() {
+        if (txtNev.getText().equals("")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Hibás Név");
+            alert.setHeaderText(null);
+            alert.setContentText("Nincs kitöltve a név mező");
+            alert.showAndWait();
+        } else {
         dolgozoDB.ujdolgozo(txtNev.getText(), dpSzulDatum.getValue().toString(), cbGyerekDB.getValue());
         dolgozoDB.dolgozo_lista(tblDolgozok.getItems(), cbNev.getItems());
+        }
     }
 
     @FXML
@@ -176,7 +189,7 @@ public class FXMLDocumentController implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText("Már szabadságon van");
             alert.showAndWait();
-        } else if (szabadsagDB.vanEelegszabija(cbNev.getValue(), dpSzabiKezdet.getValue().toString(), dpSzabiVege.getValue().toString())) {
+        } else if (szabadsagDB.vanEelegszabija(cbNev.getValue(), dpSzabiKezdet.getValue().toString(), dpSzabiVege.getValue().toString(), 0)) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Hibás Dátum");
             alert.setHeaderText(null);
@@ -305,5 +318,7 @@ public class FXMLDocumentController implements Initializable {
         dpExtraNap.setValue(LocalDate.parse(e.getDatum()));
 
     }
+    
+    
 
 }

@@ -376,7 +376,7 @@ public class DB {
         }
     }
     
-    public boolean vanEelegszabija (String nev, String szabiKezdete,String szabiVege){
+    public boolean vanEelegszabija (String nev, String szabiKezdete,String szabiVege,int eredetiSzabiHossz){
        String s = "SELECT maradek_szabadsag FROM dolgozok WHERE nev = ?;";
        boolean vanelegszabija = false;
        int maradekszabi = 0;
@@ -389,7 +389,7 @@ public class DB {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-       if ((maradekszabi - szabadsagHossz(szabiKezdete, szabiVege)) < 0)
+       if ((eredetiSzabiHossz + maradekszabi - szabadsagHossz(szabiKezdete, szabiVege)) < 0)
            vanelegszabija = true;
        return vanelegszabija;
     }
