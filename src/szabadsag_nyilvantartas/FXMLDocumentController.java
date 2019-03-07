@@ -8,6 +8,7 @@ package szabadsag_nyilvantartas;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -175,7 +176,9 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     void ujSzabadsag() {
-        if (dpSzabiVege.getValue().isBefore(dpSzabiKezdet.getValue())) {
+        try {
+            String a = cbNev.getValue().toString();
+            if (dpSzabiVege.getValue().isBefore(dpSzabiKezdet.getValue())) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Hibás Dátum");
             alert.setHeaderText(null);
@@ -198,6 +201,15 @@ public class FXMLDocumentController implements Initializable {
             szabadsagDB.szabadsag_lista(tblSzabadsagok.getItems());
             dolgozoDB.dolgozo_lista(tblDolgozok.getItems(), cbNev.getItems());
         }
+            
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Hibás név");
+            alert.setHeaderText(null);
+            alert.setContentText("Nem lett név kíválasztva");
+            alert.showAndWait();
+        }
+        
 
     }
 
@@ -239,6 +251,11 @@ public class FXMLDocumentController implements Initializable {
                 tblExtraNap.getSelectionModel().select(i - 1);
             }
         }
+    }
+    
+       @FXML
+    void vegeDatumBeallit() {
+        dpSzabiVege.setValue(dpSzabiKezdet.getValue());
     }
 
     @Override

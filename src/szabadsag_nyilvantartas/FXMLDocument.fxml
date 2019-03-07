@@ -14,7 +14,6 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="szabadsag_nyilvantartas.FXMLDocumentController">
@@ -53,14 +52,20 @@
                   </GridPane>
                   <TableView fx:id="tblDolgozok">
                     <columns>
-                      <TableColumn fx:id="oNev" prefWidth="125.0" text="Név" />
-                      <TableColumn fx:id="oSzulDatum" prefWidth="125.0" text="Születési dátum" />
-                        <TableColumn fx:id="oGyerekDB" prefWidth="125.0" text="Gyerekek száma" />
-                        <TableColumn fx:id="oEvesSzabi" prefWidth="125.0" text="Éves szabadság keret" />
-                        <TableColumn fx:id="oMaradekSzabi" prefWidth="125.0" text="Maradék szabadság" />
+                      <TableColumn fx:id="oNev" prefWidth="135.0" text="Név" />
+                      <TableColumn fx:id="oSzulDatum" prefWidth="135.0" text="Születési dátum" />
+                        <TableColumn fx:id="oGyerekDB" prefWidth="135.0" text="Gyerekek száma" />
+                        <TableColumn fx:id="oEvesSzabi" prefWidth="135.0" text="Éves szabadság keret" />
+                        <TableColumn fx:id="oMaradekSzabi" prefWidth="135.0" text="Maradék szabadság" />
                     </columns>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
                   </TableView>
                </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
+               </padding>
             </VBox>
          </content></Tab>
       <Tab text="Szabadságok">
@@ -84,7 +89,7 @@
                         <Label text="Név:" />
                         <Label text="Szabadság kezdete:" GridPane.columnIndex="2" />
                         <Label text="Szabadság vége:" GridPane.columnIndex="4" />
-                        <DatePicker fx:id="dpSzabiKezdet" GridPane.columnIndex="3" />
+                        <DatePicker fx:id="dpSzabiKezdet" onAction="#vegeDatumBeallit" GridPane.columnIndex="3" />
                         <Button mnemonicParsing="false" onAction="#ujSzabadsag" prefWidth="90.0" text="Új szabadság" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                         <Button mnemonicParsing="false" onAction="#modositSzabadsag" prefWidth="90.0" text="Módosít" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                         <Button mnemonicParsing="false" onAction="#torolSzabadsag" prefWidth="90.0" text="Töröl" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
@@ -97,13 +102,16 @@
                   </GridPane>
                   <TableView fx:id="tblSzabadsagok">
                      <columns>
-                        <TableColumn fx:id="oNevSz" prefWidth="150.0" text="Név" />
-                        <TableColumn fx:id="oSzabiKezdet" prefWidth="150.0" text="Szabadság kezdete" />
-                        <TableColumn fx:id="oSzabiVege" prefWidth="150.0" text="Szabadság vége" />
-                        <TableColumn fx:id="oSzabiHossza" prefWidth="150.0" text="Szabadság hossza" />
+                        <TableColumn fx:id="oNevSz" prefWidth="175.0" text="Név" />
+                        <TableColumn fx:id="oSzabiKezdet" prefWidth="175.0" text="Szabadság kezdete" />
+                        <TableColumn fx:id="oSzabiVege" prefWidth="175.0" text="Szabadság vége" />
+                        <TableColumn fx:id="oSzabiHossza" prefWidth="175.0" text="Szabadság hossza" />
                      </columns>
                   </TableView>
                </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
+               </padding>
             </VBox>
          </content>
       </Tab>
@@ -111,7 +119,7 @@
           <content>
             <VBox>
                <children>
-                  <GridPane alignment="CENTER" hgap="10.0" prefHeight="200.0">
+                  <GridPane alignment="CENTER" hgap="10.0" prefHeight="400.0">
                     <columnConstraints>
                       <ColumnConstraints halignment="RIGHT" minWidth="10.0" />
                         <ColumnConstraints halignment="CENTER" minWidth="10.0" />
@@ -119,9 +127,9 @@
                         <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="ALWAYS" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="60.0" valignment="CENTER" vgrow="ALWAYS" />
+                      <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
@@ -139,10 +147,10 @@
                         <ComboBox fx:id="cbDatumTipus" prefWidth="210.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
                         <Button mnemonicParsing="false" onAction="#extradatum_hozzaad" text="Hozzáad" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                         <Button mnemonicParsing="false" onAction="#extradatum_torol" text="Töröl" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <TableView fx:id="tblExtraNap" maxWidth="350.0" prefHeight="250.0" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.rowSpan="3">
+                        <TableView fx:id="tblExtraNap" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.rowSpan="3">
                           <columns>
-                            <TableColumn fx:id="oExtraDatum" prefWidth="125.0" text="Dátum" />
-                            <TableColumn fx:id="oExtraTipus" prefWidth="190.0" text="Típus" />
+                            <TableColumn fx:id="oExtraDatum" prefWidth="135.0" text="Dátum" />
+                            <TableColumn fx:id="oExtraTipus" prefWidth="220.0" text="Típus" />
                           </columns>
                         </TableView>
                      </children>
@@ -150,7 +158,6 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                   </GridPane>
-                  <Line endX="674.2929077148438" endY="-4.606602191925049" startX="-100.0" />
                </children>
             </VBox>
          </content>
