@@ -5,6 +5,8 @@
  */
 package szabadsag_nyilvantartas;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,27 +14,39 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Properties;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 
 /**
- * Adatbázis kezelő osztály
- * az összes adatbázis lekérdezés, módosítást illetve törlést ez az osztály végzi
- * 
+ * Adatbázis kezelő osztály az összes adatbázis lekérdezés, módosítást illetve
+ * törlést ez az osztály végzi
+ *
  * @author Polgár Béla
  */
 public class DB {
     
+    Properties ini = new Properties();
+    String dbUrl, user, pass;
     
-    final String dbUrl = "jdbc:mysql://localhost:3306/nyilvantarto2019?useUnicode=true&characterEncoding=UTF-8";
-    final String user = "root";
-    final String pass = "";
+    public DB() {
+        try (FileInputStream be = new FileInputStream("setup.ini")) {
+            ini.load(be);
+            dbUrl = "jdbc:mysql://" + ini.getProperty("ip") + "/szabadsag-nyilvantartas?useUnicode=true&characterEncoding=UTF-8";
+            user = ini.getProperty("user");
+            pass = ini.getProperty("pass");
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+            Platform.exit();
+        }
+    }
     
     /**
      * A dolgozók listázása
+     *
      * @param tabla a dolgozok táblából az összes adatatot tartalmazza
      * @param lista a dolgozok táblából a dolgozók neveit tartalmazza
      */
-
     public void dolgozo_lista(ObservableList<Dolgozo> tabla, ObservableList<String> lista) { //dolgozók listázása
         String s = "SELECT * FROM dolgozok ORDER BY nev;";
         try (Connection kapcs = DriverManager.getConnection(dbUrl, user, pass);
@@ -57,7 +71,8 @@ public class DB {
 
     /**
      * A szabadságok listázása
-     * @param tabla a szabadsagok táblából az összes adatot tartalmazza 
+     *
+     * @param tabla a szabadsagok táblából az összes adatot tartalmazza
      */
     public void szabadsag_lista(ObservableList<Szabadsag> tabla) { //összes sabadság listázása
         String s = "SELECT szabadsagok.id,dolgozok.nev,szabadsag_kezdete,szabadsag_vege,szabadsag_hossza FROM szabadsagok JOIN dolgozok ON szabadsagok.dolgozoid=dolgozok.id ORDER BY szabadsagok.id;";
@@ -79,8 +94,9 @@ public class DB {
     }
 
     /**
-     * Dolgozó törlése a dolgozo táblából
-     * Az a dolgozó kerül törlésre, amelyik id-ját adjuk meg
+     * Dolgozó törlése a dolgozo táblából Az a dolgozó kerül törlésre, amelyik
+     * id-ját adjuk meg
+     *
      * @param id a dolgozó egyedi azonosítója
      */
     public void dolgozo_torles(int id) {
@@ -97,6 +113,7 @@ public class DB {
 
     /**
      * Új dolgozó bevitele dolgozó táblába
+     *
      * @param nev a dolgozó neve
      * @param szuletesi_datum a dolgozó születési dátuma
      * @param gyerekek_szama a dolgozó gyermekeinek száma
@@ -119,7 +136,9 @@ public class DB {
     }
 
     /**
-     * Kiszámítja a születési időből és a gyermekek számából, hogy 2019-ben hány nap szabadság jár
+     * Kiszámítja a születési időből és a gyermekek számából, hogy 2019-ben hány
+     * nap szabadság jár
+     *
      * @param szulido a dolgozó születési ideje
      * @param gyerekdb a dolgozó gyermekeinek száma
      * @return a dolgozó éves szabadságának száma
@@ -162,9 +181,10 @@ public class DB {
         }
         return eveszabadsag;
     }
-    
+
     /**
      * Dolgozó adatainak modósítása
+     *
      * @param id a dolgozó egyedi sorszáma
      * @param nev a dolgozó neve
      * @param szuletesiDatum a dolgozó születési dátuma
@@ -185,10 +205,11 @@ public class DB {
             System.out.println(ex.getMessage());
         }
     }
-    
-    
+
     /**
-     * A nev paraméterbe kapott dolgozó maradék szabadságát módosítja a valtozás mértékével
+     * A nev paraméterbe kapott dolgozó maradék szabadságát módosítja a valtozás
+     * mértékével
+     *
      * @param nev a modosítandó dolgozó neve
      * @param valtozas a változás mértéke
      */
@@ -205,7 +226,9 @@ public class DB {
     }
 
     /**
-     * Új szabadság hozzáadása a szabadsagok táblához és maradék szabadságok csökkentése a szabadság hosszával
+     * Új szabadság hozzáadása a szabadsagok táblához és maradék szabadságok
+     * csökkentése a szabadság hosszával
+     *
      * @param nev a dolgozó neve
      * @param szabistart a szabadság kezdeti dátuma (szövegesen megadva)
      * @param szabivege a szabadság végének dátuma (szövegesen megadva)
@@ -239,6 +262,7 @@ public class DB {
 
     /**
      * Az id - ben megadott sorszámú szabadság törlése a szabadsagok táblából
+     *
      * @param id a törölni kívánt szabadság egyedi sorszám
      */
     public void szabadsag_torles(int id) {
@@ -252,12 +276,18 @@ public class DB {
             System.out.println(ex.getMessage());
         }
     }
+
     /**
-     * Az id - ben megadott sorszámú szabadság módosítása, ellenőrzése, hogy nem e ütközik már a dolgozó másik szabadságával, illetve a dolgozó maradék szabadságának változtatása
+     * Az id - ben megadott sorszámú szabadság módosítása, ellenőrzése, hogy nem
+     * e ütközik már a dolgozó másik szabadságával, illetve a dolgozó maradék
+     * szabadságának változtatása
+     *
      * @param id a módosítani kívánt szabadság egyedi sorszám
      * @param nev a módosítani kívánt szabadsághoz tartozó név
-     * @param szabikezdete a módosítani kívánt szabadsághoz tartozó új szabadság kezdet dátum
-     * @param szabivege a módosítani kívánt szabadsághoz tartozó új szabadsá vége dátum
+     * @param szabikezdete a módosítani kívánt szabadsághoz tartozó új szabadság
+     * kezdet dátum
+     * @param szabivege a módosítani kívánt szabadsághoz tartozó új szabadsá
+     * vége dátum
      */
     public void szabadsag_modositas(int id, String nev, String szabikezdete, String szabivege) {
 
@@ -298,10 +328,13 @@ public class DB {
     }
 
     /**
-     * a kapott String típusú dátumokból kiszámolja a szabadság hosszát, figyelembe véve a hétvégi napokat, a munkaszüneti napokat és a ledolgozásos napokat
+     * a kapott String típusú dátumokból kiszámolja a szabadság hosszát,
+     * figyelembe véve a hétvégi napokat, a munkaszüneti napokat és a
+     * ledolgozásos napokat
+     *
      * @param szabistart a szabadság kezdete
      * @param szabivege a stabadság vége
-     * @return 
+     * @return
      */
     private int szabadsagHossz(String szabistart, String szabivege) {
         //String átkonvertálása dátummá
@@ -324,7 +357,7 @@ public class DB {
                 if (x == 6 || x == 7) {
                     hetveginapok++;
                 }
-                x ++;
+                x++;
             }
             szabihossza -= hetveginapok;
         }
@@ -348,15 +381,18 @@ public class DB {
         }
         return szabihossza;
     }
-    
+
     /**
-     * Az adott dolgozó szabadságon van e, a szabiStart dátum és a szabiVege dátum intervallumban, az id paraméter megadásával 
-     * figyelmen kívűl hagyja a megadott id - hez tartozó szabadságot, így szabadság módosításnál nem veszi figyelembe az éppen módosítás 
-     * alatt lévő szabadságot
+     * Az adott dolgozó szabadságon van e, a szabiStart dátum és a szabiVege
+     * dátum intervallumban, az id paraméter megadásával figyelmen kívűl hagyja
+     * a megadott id - hez tartozó szabadságot, így szabadság módosításnál nem
+     * veszi figyelembe az éppen módosítás alatt lévő szabadságot
+     *
      * @param nev a dolgozó neve
      * @param szabiStart az ellenőrizni kívánt dátum intervallum kezdete
      * @param szabiVege az ellenőrizni kívánt dátum intervallum vége
-     * @param id azon szabadság egyedi sorszáma amit figyelmen kívűl szeretnénk hagyni (módosításkor van jelentősége)
+     * @param id azon szabadság egyedi sorszáma amit figyelmen kívűl szeretnénk
+     * hagyni (módosításkor van jelentősége)
      * @return true -t ad vissza, ha szabadságon van már
      */
     public boolean szabinVanE(String nev, LocalDate szabiStart, LocalDate szabiVege, int id) {
@@ -393,6 +429,7 @@ public class DB {
 
     /**
      * A munkaszüneti napokat, illetve a szombati munkanapokat kérdezi le
+     *
      * @param tabla az extranapok tábla összes elemét tartalmazza
      */
     public void extranap_lista(ObservableList<ExtraDatum> tabla) { //összes sabadság listázása
@@ -414,6 +451,7 @@ public class DB {
 
     /**
      * Új extranap felvitele (munkaszüneti nap, szombati munkanap..)
+     *
      * @param datum Az új extranap dátuma
      * @param tipus Az új extranap típusa (munkaszüneti nap, szombati munkanap)
      */
@@ -436,8 +474,10 @@ public class DB {
             System.out.println(ex.getMessage());
         }
     }
+
     /**
      * Az id - ben megadott sorszámú extranap törlése a szabadsagok táblából
+     *
      * @param id a törölni kívánt extranap egyedi sorszáma
      */
     public void extranap_torles(int id) {
@@ -451,21 +491,23 @@ public class DB {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     /**
-     * 
-     * @param nev
-     * @param szabiKezdete
-     * @param szabiVege
-     * @param eredetiSzabiHossz
-     * @return 
+     * Ellenőrzi, hogy az adott dolgozónak van e elég szabadsága
+     *
+     * @param nev a dolgozó neve
+     * @param szabiKezdete a szabadság kezdete
+     * @param szabiVege a szabadság vége
+     * @param eredetiSzabiHossz az eredeti szabadság hossza, amennyiben
+     * módosításról van szó
+     * @return true , ha van elég szabadsága
      */
-    public boolean vanEelegszabija (String nev, String szabiKezdete,String szabiVege,int eredetiSzabiHossz){
-       String s = "SELECT maradek_szabadsag FROM dolgozok WHERE nev = ?;";
-       boolean vanelegszabija = false;
-       int maradekszabi = 0;
-       try (Connection kapcs = DriverManager.getConnection(dbUrl, user, pass);
-            PreparedStatement ekp = kapcs.prepareStatement(s)) {
+    public boolean vanEelegszabija(String nev, String szabiKezdete, String szabiVege, int eredetiSzabiHossz) {
+        String s = "SELECT maradek_szabadsag FROM dolgozok WHERE nev = ?;";
+        boolean vanelegszabija = false;
+        int maradekszabi = 0;
+        try (Connection kapcs = DriverManager.getConnection(dbUrl, user, pass);
+                PreparedStatement ekp = kapcs.prepareStatement(s)) {
             ekp.setString(1, nev);
             ResultSet eredmeny = ekp.executeQuery();
             eredmeny.next();
@@ -473,14 +515,10 @@ public class DB {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-       if ((eredetiSzabiHossz + maradekszabi - szabadsagHossz(szabiKezdete, szabiVege)) < 0)
-           vanelegszabija = true;
-       return vanelegszabija;
+        if ((eredetiSzabiHossz + maradekszabi - szabadsagHossz(szabiKezdete, szabiVege)) < 0) {
+            vanelegszabija = true;
+        }
+        return vanelegszabija;
     }
 
-    public static void main(String[] args) {
-        DB ab = new DB();
-        System.out.println(ab.szabinVanE("Polgár Béla", LocalDate.parse("2019-03-05"), LocalDate.parse("2019-03-05"), 0));
-
-    }
 }

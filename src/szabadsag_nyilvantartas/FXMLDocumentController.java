@@ -8,7 +8,6 @@ package szabadsag_nyilvantartas;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -284,6 +283,9 @@ public class FXMLDocumentController implements Initializable {
 
         dpSzabiKezdet.setValue(LocalDate.now());
         dpSzabiVege.setValue(dpSzabiKezdet.getValue());
+        
+        dpSzabiKezdet.setShowWeekNumbers(true);
+        dpSzabiVege.setShowWeekNumbers(true);
 
         szabadsagDB.szabadsag_lista(tblSzabadsagok.getItems());
 
