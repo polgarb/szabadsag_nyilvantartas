@@ -31,7 +31,7 @@ public class ExtraDatum {
         this.id = id;
     }
 
-    public void setTipus(int ertek) {
+    private void setTipus(int ertek) {
         if (ertek == -1) {
             tipus = "Munkaszüneti nap";
         } else {

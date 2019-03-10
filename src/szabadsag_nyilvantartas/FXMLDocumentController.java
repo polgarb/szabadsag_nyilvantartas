@@ -92,23 +92,13 @@ public class FXMLDocumentController implements Initializable {
         if (i > -1) {
             int id = tblSzabadsagok.getItems().get(i).getId();
             if (dpSzabiVege.getValue().isBefore(dpSzabiKezdet.getValue())) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Hibás Dátum");
-                alert.setHeaderText(null);
-                alert.setContentText("A szabadság vége nem lehet korábbi dátum");
-                alert.showAndWait();
+                ertesites("Hibás Dátum", "A szabadság vége nem lehet korábbi dátum a kezdeténél");
+            } else if (dpSzabiKezdet.getValue().getYear() != 2019 || dpSzabiVege.getValue().getYear() != 2019) {
+                ertesites("Hibás Dátum", "A szabadság kezdete és vége is csak 2019 -es évben lehet");
             } else if (szabadsagDB.szabinVanE(cbNev.getValue(), dpSzabiKezdet.getValue(), dpSzabiVege.getValue(), id)) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Hibás Dátum");
-                alert.setHeaderText(null);
-                alert.setContentText("Már szabadságon van");
-                alert.showAndWait();
+                ertesites("Hibás Dátum", "Már szabadságon van");
             } else if (szabadsagDB.vanEelegszabija(cbNev.getValue(), dpSzabiKezdet.getValue().toString(), dpSzabiVege.getValue().toString(), tblSzabadsagok.getItems().get(i).getSzabiHossza())) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Hibás Dátum");
-                alert.setHeaderText(null);
-                alert.setContentText("Nincs elég szabadsága");
-                alert.showAndWait();
+                ertesites("Hibás Dátum", "Nincs elég szabadsága");
             } else {
                 szabadsagDB.szabadsag_modositas(id, cbNev.getValue(), dpSzabiKezdet.getValue().toString(), dpSzabiVege.getValue().toString());
                 szabadsagDB.szabadsag_lista(tblSzabadsagok.getItems());
@@ -162,14 +152,10 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     void ujDolgozo() {
         if (txtNev.getText().equals("")) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Hibás Név");
-            alert.setHeaderText(null);
-            alert.setContentText("Nincs kitöltve a név mező");
-            alert.showAndWait();
+            ertesites("Hibás Név", "Nincs kitöltve a név mező");
         } else {
-        dolgozoDB.ujdolgozo(txtNev.getText(), dpSzulDatum.getValue().toString(), cbGyerekDB.getValue());
-        dolgozoDB.dolgozo_lista(tblDolgozok.getItems(), cbNev.getItems());
+            dolgozoDB.ujdolgozo(txtNev.getText(), dpSzulDatum.getValue().toString(), cbGyerekDB.getValue());
+            dolgozoDB.dolgozo_lista(tblDolgozok.getItems(), cbNev.getItems());
         }
     }
 
@@ -178,37 +164,22 @@ public class FXMLDocumentController implements Initializable {
         try {
             String a = cbNev.getValue().toString();
             if (dpSzabiVege.getValue().isBefore(dpSzabiKezdet.getValue())) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Hibás Dátum");
-            alert.setHeaderText(null);
-            alert.setContentText("A szabadság vége nem lehet korábbi dátum");
-            alert.showAndWait();
-        } else if (szabadsagDB.szabinVanE(cbNev.getValue(), dpSzabiKezdet.getValue(), dpSzabiVege.getValue(), 0)) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Hibás Dátum");
-            alert.setHeaderText(null);
-            alert.setContentText("Már szabadságon van");
-            alert.showAndWait();
-        } else if (szabadsagDB.vanEelegszabija(cbNev.getValue(), dpSzabiKezdet.getValue().toString(), dpSzabiVege.getValue().toString(), 0)) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Hibás Dátum");
-            alert.setHeaderText(null);
-            alert.setContentText("Nincs elég szabadsága");
-            alert.showAndWait();
-        } else {
-            szabadsagDB.uj_szabadsag(cbNev.getValue(), dpSzabiKezdet.getValue().toString(), dpSzabiVege.getValue().toString());
-            szabadsagDB.szabadsag_lista(tblSzabadsagok.getItems());
-            dolgozoDB.dolgozo_lista(tblDolgozok.getItems(), cbNev.getItems());
-        }
-            
+                ertesites("Hibás Dátum", "A szabadság vége nem lehet korábbi dátum a kezdeténél");
+            } else if (dpSzabiKezdet.getValue().getYear() != 2019 || dpSzabiVege.getValue().getYear() != 2019) {
+                ertesites("Hibás Dátum", "A szabadság kezdete és vége is csak 2019 -es évben lehet");
+            } else if (szabadsagDB.szabinVanE(cbNev.getValue(), dpSzabiKezdet.getValue(), dpSzabiVege.getValue(), 0)) {
+                ertesites("Hibás Dátum", "Már szabadságon van");
+            } else if (szabadsagDB.vanEelegszabija(cbNev.getValue(), dpSzabiKezdet.getValue().toString(), dpSzabiVege.getValue().toString(), 0)) {
+                ertesites("Hibás Dátum", "Nincs elég szabadsága");
+            } else {
+                szabadsagDB.uj_szabadsag(cbNev.getValue(), dpSzabiKezdet.getValue().toString(), dpSzabiVege.getValue().toString());
+                szabadsagDB.szabadsag_lista(tblSzabadsagok.getItems());
+                dolgozoDB.dolgozo_lista(tblDolgozok.getItems(), cbNev.getItems());
+            }
+
         } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Hibás név");
-            alert.setHeaderText(null);
-            alert.setContentText("Nem lett név kíválasztva");
-            alert.showAndWait();
+            ertesites("Hibás Név", "Nem lett név kíválasztva");
         }
-        
 
     }
 
@@ -251,8 +222,8 @@ public class FXMLDocumentController implements Initializable {
             }
         }
     }
-    
-       @FXML
+
+    @FXML
     void vegeDatumBeallit() {
         dpSzabiVege.setValue(dpSzabiKezdet.getValue());
     }
@@ -267,7 +238,6 @@ public class FXMLDocumentController implements Initializable {
         oGyerekDB.setCellValueFactory(new PropertyValueFactory<>("gyerekDB"));
         oEvesSzabi.setCellValueFactory(new PropertyValueFactory<>("evesSzabadsag"));
         oMaradekSzabi.setCellValueFactory(new PropertyValueFactory<>("maradekSzabadsag"));
-        
 
         dpSzulDatum.setValue(LocalDate.parse("1980-01-01"));
         cbGyerekDB.setValue(0);
@@ -283,7 +253,7 @@ public class FXMLDocumentController implements Initializable {
 
         dpSzabiKezdet.setValue(LocalDate.now());
         dpSzabiVege.setValue(dpSzabiKezdet.getValue());
-        
+
         dpSzabiKezdet.setShowWeekNumbers(true);
         dpSzabiVege.setShowWeekNumbers(true);
 
@@ -336,6 +306,12 @@ public class FXMLDocumentController implements Initializable {
 
     }
     
-    
+    private void ertesites(String cim, String szoveg){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(cim);
+                alert.setHeaderText(null);
+                alert.setContentText(szoveg);
+                alert.showAndWait();
+    }
 
 }
