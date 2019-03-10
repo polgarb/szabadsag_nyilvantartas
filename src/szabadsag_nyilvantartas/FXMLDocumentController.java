@@ -91,7 +91,9 @@ public class FXMLDocumentController implements Initializable {
         int i = tblSzabadsagok.getSelectionModel().getFocusedIndex();
         if (i > -1) {
             int id = tblSzabadsagok.getItems().get(i).getId();
-            if (dpSzabiVege.getValue().isBefore(dpSzabiKezdet.getValue())) {
+            if (!cbNev.getValue().equals(tblSzabadsagok.getItems().get(i).getNev())){
+                ertesites("Hibás Név", "A név nem módosítható a szabadságnál");
+            } else if (dpSzabiVege.getValue().isBefore(dpSzabiKezdet.getValue())) {
                 ertesites("Hibás Dátum", "A szabadság vége nem lehet korábbi dátum a kezdeténél");
             } else if (dpSzabiKezdet.getValue().getYear() != 2019 || dpSzabiVege.getValue().getYear() != 2019) {
                 ertesites("Hibás Dátum", "A szabadság kezdete és vége is csak 2019 -es évben lehet");
