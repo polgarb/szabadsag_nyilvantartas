@@ -29,6 +29,11 @@ public class DB {
     Properties ini = new Properties();
     String dbUrl, user, pass;
     
+    
+    /**
+     * Az adatbázis eléréséhez szükséges cím (dbUrl), a felhasználónév (user) és jelszó (pass) beolvasása a setup.ini file -ból.
+     */
+    
     public DB() {
         try (FileInputStream be = new FileInputStream("setup.ini")) {
             ini.load(be);

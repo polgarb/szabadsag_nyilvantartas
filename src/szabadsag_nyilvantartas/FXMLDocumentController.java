@@ -5,12 +5,16 @@
  */
 package szabadsag_nyilvantartas;
 
+import java.awt.Desktop;
+import java.net.URI;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
@@ -74,7 +78,8 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private TableColumn<Szabadsag, Integer> oSzabiHossza;
-
+    
+    
     @FXML
     void modositDolgozo() {
         int i = tblDolgozok.getSelectionModel().getSelectedIndex();
@@ -91,7 +96,7 @@ public class FXMLDocumentController implements Initializable {
         int i = tblSzabadsagok.getSelectionModel().getFocusedIndex();
         if (i > -1) {
             int id = tblSzabadsagok.getItems().get(i).getId();
-            if (!cbNev.getValue().equals(tblSzabadsagok.getItems().get(i).getNev())){
+            if (!cbNev.getValue().equals(tblSzabadsagok.getItems().get(i).getNev())) {
                 ertesites("Hibás Név", "A név nem módosítható a szabadságnál");
             } else if (dpSzabiVege.getValue().isBefore(dpSzabiKezdet.getValue())) {
                 ertesites("Hibás Dátum", "A szabadság vége nem lehet korábbi dátum a kezdeténél");
@@ -230,6 +235,24 @@ public class FXMLDocumentController implements Initializable {
         dpSzabiVege.setValue(dpSzabiKezdet.getValue());
     }
 
+    @FXML
+    void informacio() throws Exception{
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Információ");
+        alert.setHeaderText("A programot készítette : Polgár Béla");
+        alert.setContentText("Segítség a program használatához :");
+
+        ButtonType link = new ButtonType("Program kézikönyve");
+        alert.getButtonTypes().clear();
+
+        alert.getButtonTypes().addAll(link);
+        Optional<ButtonType> option = alert.showAndWait();
+        
+        if (option.isPresent()) 
+            Desktop.getDesktop().browse(new URI("http://www.nso.hu"));
+        
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //dolgozók tábla
@@ -307,13 +330,13 @@ public class FXMLDocumentController implements Initializable {
         dpExtraNap.setValue(LocalDate.parse(e.getDatum()));
 
     }
-    
-    private void ertesites(String cim, String szoveg){
+
+    private void ertesites(String cim, String szoveg) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle(cim);
-                alert.setHeaderText(null);
-                alert.setContentText(szoveg);
-                alert.showAndWait();
+        alert.setTitle(cim);
+        alert.setHeaderText(null);
+        alert.setContentText(szoveg);
+        alert.showAndWait();
     }
 
 }

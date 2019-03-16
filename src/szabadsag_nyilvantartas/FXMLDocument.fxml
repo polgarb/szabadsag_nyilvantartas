@@ -10,6 +10,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -160,6 +161,15 @@
                      </padding>
                   </GridPane>
                   <Line endX="820.2929077148438" endY="1.6568458080291748" startX="-100.0" />
+                  <AnchorPane VBox.vgrow="ALWAYS">
+                     <children>
+                        <Button contentDisplay="CENTER" defaultButton="true" layoutX="425.0" layoutY="33.0" mnemonicParsing="false" onAction="#informacio" text="Információ" textAlignment="JUSTIFY">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
                </children>
             </VBox>
          </content>
