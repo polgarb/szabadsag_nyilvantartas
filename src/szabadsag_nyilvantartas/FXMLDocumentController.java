@@ -160,6 +160,7 @@ public class FXMLDocumentController implements Initializable {
     void ujDolgozo() {
         if (txtNev.getText().equals("")) {
             ertesites("Hibás Név", "Nincs kitöltve a név mező");
+            txtNev.requestFocus();
         } else {
             dolgozoDB.ujdolgozo(txtNev.getText(), dpSzulDatum.getValue().toString(), cbGyerekDB.getValue());
             dolgozoDB.dolgozo_lista(tblDolgozok.getItems(), cbNev.getItems());
@@ -168,9 +169,11 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     void ujSzabadsag() {
-        try {
-            String a = cbNev.getValue().toString();
-            if (dpSzabiVege.getValue().isBefore(dpSzabiKezdet.getValue())) {
+        //try {
+            String a = cbNev.getValue();
+            if (a == null)
+                 ertesites("Hibás Név", "Nem lett név kíválasztva");
+            else if (dpSzabiVege.getValue().isBefore(dpSzabiKezdet.getValue())) {
                 ertesites("Hibás Dátum", "A szabadság vége nem lehet korábbi dátum a kezdeténél");
             } else if (dpSzabiKezdet.getValue().getYear() != 2019 || dpSzabiVege.getValue().getYear() != 2019) {
                 ertesites("Hibás Dátum", "A szabadság kezdete és vége is csak 2019 -es évben lehet");
@@ -184,9 +187,10 @@ public class FXMLDocumentController implements Initializable {
                 dolgozoDB.dolgozo_lista(tblDolgozok.getItems(), cbNev.getItems());
             }
 
-        } catch (Exception e) {
-            ertesites("Hibás Név", "Nem lett név kíválasztva");
-        }
+        //} catch (Exception e) {
+        //    ertesites("Hibás Név", "Nem lett név kíválasztva");
+        //    cbNev.requestFocus();
+        //}
 
     }
 
