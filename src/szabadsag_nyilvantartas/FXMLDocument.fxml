@@ -59,6 +59,7 @@
                         <TableColumn fx:id="oGyerekDB" prefWidth="135.0" text="Gyerekek száma" />
                         <TableColumn fx:id="oEvesSzabi" prefWidth="135.0" text="Éves szabadság keret" />
                         <TableColumn fx:id="oMaradekSzabi" prefWidth="135.0" text="Maradék szabadság" />
+                        <TableColumn fx:id="oKivettSzabi" prefWidth="135.0" text="Kivett szabadság" />
                     </columns>
                      <VBox.margin>
                         <Insets />

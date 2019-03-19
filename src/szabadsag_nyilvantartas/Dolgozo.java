@@ -17,7 +17,7 @@ public class Dolgozo {
     private int gyerekDB;
     private int evesSzabadsag;
     private int maradekSzabadsag;
-    private int fizetesNelkuli;
+    private int kivettszabi;
     
     /**
      * 
@@ -27,6 +27,7 @@ public class Dolgozo {
      * @param gyerekDB a dolgozó gyermekeinek száma
      * @param evesSzabadsag a dolgozó éves szabadságainak a száma
      * @param maradekSzabadsag a dolgozó megmaradt szabadságainak száma
+     * @param kivettszabi a dolgozó kivett szabadságának száma
      */
 
     public Dolgozo(int id, String nev, String szuletesiDatum, int gyerekDB, int evesSzabadsag, int maradekSzabadsag) {
@@ -36,6 +37,7 @@ public class Dolgozo {
         this.gyerekDB = gyerekDB;
         this.evesSzabadsag = evesSzabadsag;
         this.maradekSzabadsag = maradekSzabadsag;
+        this.kivettszabi = evesSzabadsag - maradekSzabadsag;
         
     }
     
@@ -134,5 +136,22 @@ public class Dolgozo {
     public void setMaradekSzabadsag(int maradekSzabadsag) {
         this.maradekSzabadsag = maradekSzabadsag;
     }
+    
+    /**
+     * A dolgozó kivett szabadságait adja vissza
+     * @return 
+     */
+    public int getKivettszabi() {
+        return kivettszabi;
+    }
+    
+    /**
+     * A dolgozó kivett szabadságát állítja be
+     * @param kivettszabi 
+     */
+    public void setKivettszabi(int kivettszabi) {
+        this.kivettszabi = kivettszabi;
+    }
 
+    
 }
