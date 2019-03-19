@@ -6,6 +6,7 @@
 package szabadsag_nyilvantartas;
 
 import java.awt.Desktop;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 import java.time.LocalDate;
@@ -56,6 +57,9 @@ public class FXMLDocumentController implements Initializable {
     private TableColumn<Dolgozo, Integer> oMaradekSzabi;
 
     @FXML
+    private TableColumn<Dolgozo, Integer> oKivettSzabi;
+
+    @FXML
     private DatePicker dpSzabiKezdet;
 
     @FXML
@@ -78,8 +82,7 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private TableColumn<Szabadsag, Integer> oSzabiHossza;
-    
-    
+
     @FXML
     void modositDolgozo() {
         int i = tblDolgozok.getSelectionModel().getSelectedIndex();
@@ -88,12 +91,14 @@ public class FXMLDocumentController implements Initializable {
             dolgozoDB.dolgozo_modositas(id, txtNev.getText(), dpSzulDatum.getValue().toString(), cbGyerekDB.getValue());
             dolgozoDB.dolgozo_lista(tblDolgozok.getItems(), cbNev.getItems());
             tblDolgozok.getSelectionModel().select(i);
+        } else {
+            ertesites("Hiba", "Nincs kiválasztva sor");
         }
     }
 
     @FXML
     void modositSzabadsag() {
-        int i = tblSzabadsagok.getSelectionModel().getFocusedIndex();
+        int i = tblSzabadsagok.getSelectionModel().getSelectedIndex();
         if (i > -1) {
             int id = tblSzabadsagok.getItems().get(i).getId();
             if (!cbNev.getValue().equals(tblSzabadsagok.getItems().get(i).getNev())) {
@@ -112,7 +117,8 @@ public class FXMLDocumentController implements Initializable {
                 dolgozoDB.dolgozo_lista(tblDolgozok.getItems(), cbNev.getItems());
                 tblSzabadsagok.getSelectionModel().select(i);
             }
-
+        } else {
+            ertesites("Hiba", "Nincs kiválasztva sor");
         }
     }
 
@@ -130,6 +136,8 @@ public class FXMLDocumentController implements Initializable {
             } else if (i > 0) {
                 tblDolgozok.getSelectionModel().select(i - 1);
             }
+        } else {
+            ertesites("Hiba", "Nincs kiválasztva sor");
         }
 
     }
@@ -152,6 +160,8 @@ public class FXMLDocumentController implements Initializable {
                 tblSzabadsagok.getSelectionModel().select(i - 1);
             }
 
+        } else {
+            ertesites("Hiba", "Nincs kiválasztva sor");
         }
 
     }
@@ -170,28 +180,28 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     void ujSzabadsag() {
         //try {
-            String a = cbNev.getValue();
-            if (a == null)
-                 ertesites("Hibás Név", "Nem lett név kíválasztva");
-            else if (dpSzabiVege.getValue().isBefore(dpSzabiKezdet.getValue())) {
-                ertesites("Hibás Dátum", "A szabadság vége nem lehet korábbi dátum a kezdeténél");
-            } else if (dpSzabiKezdet.getValue().getYear() != 2019 || dpSzabiVege.getValue().getYear() != 2019) {
-                ertesites("Hibás Dátum", "A szabadság kezdete és vége is csak 2019 -es évben lehet");
-            } else if (szabadsagDB.szabinVanE(cbNev.getValue(), dpSzabiKezdet.getValue(), dpSzabiVege.getValue(), 0)) {
-                ertesites("Hibás Dátum", "Már szabadságon van");
-            } else if (szabadsagDB.vanEelegszabija(cbNev.getValue(), dpSzabiKezdet.getValue().toString(), dpSzabiVege.getValue().toString(), 0)) {
-                ertesites("Hibás Dátum", "Nincs elég szabadsága");
-            } else {
-                szabadsagDB.uj_szabadsag(cbNev.getValue(), dpSzabiKezdet.getValue().toString(), dpSzabiVege.getValue().toString());
-                szabadsagDB.szabadsag_lista(tblSzabadsagok.getItems());
-                dolgozoDB.dolgozo_lista(tblDolgozok.getItems(), cbNev.getItems());
-            }
+        String a = cbNev.getValue();
+        if (a == null) {
+            ertesites("Hibás Név", "Nem lett név kíválasztva");
+        } else if (dpSzabiVege.getValue().isBefore(dpSzabiKezdet.getValue())) {
+            ertesites("Hibás Dátum", "A szabadság vége nem lehet korábbi dátum a kezdeténél");
+        } else if (dpSzabiKezdet.getValue().getYear() != 2019 || dpSzabiVege.getValue().getYear() != 2019) {
+            ertesites("Hibás Dátum", "A szabadság kezdete és vége is csak 2019 -es évben lehet");
+        } else if (szabadsagDB.szabinVanE(cbNev.getValue(), dpSzabiKezdet.getValue(), dpSzabiVege.getValue(), 0)) {
+            ertesites("Hibás Dátum", "Már szabadságon van");
+        } else if (szabadsagDB.vanEelegszabija(cbNev.getValue(), dpSzabiKezdet.getValue().toString(), dpSzabiVege.getValue().toString(), 0)) {
+            ertesites("Hibás Dátum", "Nincs elég szabadsága");
+        } else {
+            szabadsagDB.uj_szabadsag(cbNev.getValue(), dpSzabiKezdet.getValue().toString(), dpSzabiVege.getValue().toString());
+            szabadsagDB.szabadsag_lista(tblSzabadsagok.getItems());
+            dolgozoDB.dolgozo_lista(tblDolgozok.getItems(), cbNev.getItems());
+
+        }
 
         //} catch (Exception e) {
         //    ertesites("Hibás Név", "Nem lett név kíválasztva");
         //    cbNev.requestFocus();
         //}
-
     }
 
     @FXML
@@ -211,9 +221,18 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     void extradatum_hozzaad() {
-        extradatumDB.uj_extranap(dpExtraNap.getValue().toString(), cbDatumTipus.getValue());
-        extradatumDB.extranap_lista(tblExtraNap.getItems());
-
+        try {
+            String datum = dpExtraNap.getValue().toString();
+            String tipus = cbDatumTipus.getValue();
+            if (tipus == null) {
+                ertesites("Hiba", "Típus nincs kiválasztva");
+            } else {
+                extradatumDB.uj_extranap(datum, tipus);
+                extradatumDB.extranap_lista(tblExtraNap.getItems());
+            }
+        } catch (Exception e) {
+            ertesites("Hiba", "Dátum nincs kiválasztva");
+        }
     }
 
     @FXML
@@ -240,7 +259,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    void informacio() throws Exception{
+    void informacio() throws Exception {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Információ");
         alert.setHeaderText("A programot készítette : Polgár Béla");
@@ -251,10 +270,11 @@ public class FXMLDocumentController implements Initializable {
 
         alert.getButtonTypes().addAll(link);
         Optional<ButtonType> option = alert.showAndWait();
-        
-        if (option.isPresent()) 
+
+        if (option.isPresent()) {
             Desktop.getDesktop().browse(new URI("http://www.nso.hu"));
-        
+        }
+
     }
 
     @Override
@@ -267,6 +287,7 @@ public class FXMLDocumentController implements Initializable {
         oGyerekDB.setCellValueFactory(new PropertyValueFactory<>("gyerekDB"));
         oEvesSzabi.setCellValueFactory(new PropertyValueFactory<>("evesSzabadsag"));
         oMaradekSzabi.setCellValueFactory(new PropertyValueFactory<>("maradekSzabadsag"));
+        oKivettSzabi.setCellValueFactory(new PropertyValueFactory<>("kivettszabi"));
 
         dpSzulDatum.setValue(LocalDate.parse("1980-01-01"));
         cbGyerekDB.setValue(0);
