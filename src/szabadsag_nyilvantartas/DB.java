@@ -339,7 +339,7 @@ public class DB {
      *
      * @param szabistart a szabadság kezdete
      * @param szabivege a stabadság vége
-     * @return
+     * @return visszaadja a szabadság hosszát
      */
     private int szabadsagHossz(String szabistart, String szabivege) {
         //String átkonvertálása dátummá

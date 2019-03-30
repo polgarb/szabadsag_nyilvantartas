@@ -27,7 +27,6 @@ public class Dolgozo {
      * @param gyerekDB a dolgozó gyermekeinek száma
      * @param evesSzabadsag a dolgozó éves szabadságainak a száma
      * @param maradekSzabadsag a dolgozó megmaradt szabadságainak száma
-     * @param kivettszabi a dolgozó kivett szabadságának száma
      */
 
     public Dolgozo(int id, String nev, String szuletesiDatum, int gyerekDB, int evesSzabadsag, int maradekSzabadsag) {
@@ -43,7 +42,7 @@ public class Dolgozo {
     
     /**
      * A dolgozó egyedi sorszámát kérdezi le
-     * @return 
+     * @return a dolgozó sorszáma
      */
     public int getId() {
         return id;
@@ -51,7 +50,7 @@ public class Dolgozo {
     
     /**
      * A dolgozó sorszámát állítja be
-     * @param id 
+     * @param id a dolgozó sorszáma
      */
     public void setId(int id) {
         this.id = id;
@@ -59,7 +58,7 @@ public class Dolgozo {
     
     /**
      * A dolgozó nevét adja vissza
-     * @return 
+     * @return a dolgozó neve
      */
     public String getNev() {
         return nev;
@@ -67,7 +66,7 @@ public class Dolgozo {
     
     /**
      * A dolgozó nevét állítja be 
-     * @param nev 
+     * @param nev a dolgozó neve
      */
     public void setNev(String nev) {
         this.nev = nev;
@@ -75,7 +74,7 @@ public class Dolgozo {
     
     /**
      * A dolgozó születési dátumát adja vissza
-     * @return sz
+     * @return születési dátum
      */
     public String getSzuletesiDatum() {
         return szuletesiDatum;
@@ -83,7 +82,7 @@ public class Dolgozo {
     
     /**
      * A dolgozó születési dátumát állítja be
-     * @param szuletesiDatum 
+     * @param szuletesiDatum születési dátum
      */
     public void setSzuletesiDatum(String szuletesiDatum) {
         this.szuletesiDatum = szuletesiDatum;
@@ -91,7 +90,7 @@ public class Dolgozo {
 
     /**
      * A dolgozó gyermekeinek számát adja vissza
-     * @return 
+     * @return gyerekek száma
      */
     public int getGyerekDB() {
         return gyerekDB;
@@ -99,7 +98,7 @@ public class Dolgozo {
     
     /**
      * A dolgozó gyermekeinek számát állítja be
-     * @param gyerekDB 
+     * @param gyerekDB gyerekek száma
      */
     public void setGyerekDB(int gyerekDB) {
         this.gyerekDB = gyerekDB;
@@ -107,7 +106,7 @@ public class Dolgozo {
     
     /**
      * A dolgozó éves szabadságának számát adja vissza
-     * @return 
+     * @return éves szabadság száma
      */
     public int getEvesSzabadsag() {
         return evesSzabadsag;
@@ -115,7 +114,7 @@ public class Dolgozo {
 
     /**
      * A dolgozó éves szabadságait állítja be a kapott értékra
-     * @param evesSzabadsag 
+     * @param evesSzabadsag éves szabadság száma
      */
     public void setEvesSzabadsag(int evesSzabadsag) {
         this.evesSzabadsag = evesSzabadsag;
@@ -123,7 +122,7 @@ public class Dolgozo {
 
     /**
      * A dolgozó megmaradt szabadságát adja vissza
-     * @return 
+     * @return maradék szabadság
      */
     public int getMaradekSzabadsag() {
         return maradekSzabadsag;
@@ -131,7 +130,7 @@ public class Dolgozo {
 
     /**
      * A dolgozó maradék szabadságát állítja be
-     * @param maradekSzabadsag 
+     * @param maradekSzabadsag maradék szabadság
      */
     public void setMaradekSzabadsag(int maradekSzabadsag) {
         this.maradekSzabadsag = maradekSzabadsag;
@@ -139,7 +138,7 @@ public class Dolgozo {
     
     /**
      * A dolgozó kivett szabadságait adja vissza
-     * @return 
+     * @return kivett szabadságok száma
      */
     public int getKivettszabi() {
         return kivettszabi;
@@ -147,7 +146,7 @@ public class Dolgozo {
     
     /**
      * A dolgozó kivett szabadságát állítja be
-     * @param kivettszabi 
+     * @param kivettszabi kivett szabadságok száma
      */
     public void setKivettszabi(int kivettszabi) {
         this.kivettszabi = kivettszabi;

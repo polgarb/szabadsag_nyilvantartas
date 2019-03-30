@@ -18,7 +18,7 @@ public class Szabadsag {
     private int szabiHossza;
     
     /**
-     * 
+     * Konstruktor
      * @param id a szabadság egyedi száma
      * @param nev a szabadságon lévő neve
      * @param szabiKezdete a szabadságának kezdete
@@ -36,7 +36,7 @@ public class Szabadsag {
     
     /**
      * A szabadság sorszámát adja vissza
-     * @return 
+     * @return szabadság sorszáma
      */
     public int getId() {
         return id;
@@ -44,7 +44,7 @@ public class Szabadsag {
     
     /**
      * A szabadság sorszámát állítja be
-     * @param id 
+     * @param id szabadság sorszáma
      */
     public void setId(int id) {
         this.id = id;
@@ -52,7 +52,7 @@ public class Szabadsag {
 
     /**
      * A szabadsághoz tartozó dolgozó nevét adja vissza
-     * @return 
+     * @return dolgozó neve
      */
     public String getNev() {
         return nev;
@@ -60,7 +60,7 @@ public class Szabadsag {
     
     /**
      * A szabadsághoz tartozó dolgozó nevét állítja be 
-     * @param nev 
+     * @param nev dolgozó neve
      */
     public void setNev(String nev) {
         this.nev = nev;
@@ -68,7 +68,7 @@ public class Szabadsag {
 
     /**
      * A szabadság kezdeti dátumát adja vissza
-     * @return 
+     * @return szabadság kezdésének dátuma
      */
     public String getSzabiKezdete() {
         return szabiKezdete;
@@ -76,7 +76,7 @@ public class Szabadsag {
 
     /**
      * A szabadság kezdeti dátumát állítja be
-     * @param szabiKezdete 
+     * @param szabiKezdete szabadság kezdésének dátuma
      */
     public void setSzabiKezdete(String szabiKezdete) {
         this.szabiKezdete = szabiKezdete;
@@ -84,7 +84,7 @@ public class Szabadsag {
 
     /**
      * A szabadság vége dátumát adja vissza
-     * @return 
+     * @return szabadság végének dátuma
      */
     public String getSzabiVege() {
         return szabiVege;
@@ -92,7 +92,7 @@ public class Szabadsag {
 
     /**
      * A szabadság végének dátumát állítja be
-     * @param szabiVege 
+     * @param szabiVege szabadság végének dátuma
      */
     public void setSzabiVege(String szabiVege) {
         this.szabiVege = szabiVege;
@@ -100,7 +100,7 @@ public class Szabadsag {
 
     /**
      * A szabadság hosszát adja vissza (hány munkanapig tart)
-     * @return 
+     * @return szabadság hossza
      */
     public int getSzabiHossza() {
         return szabiHossza;
@@ -108,7 +108,7 @@ public class Szabadsag {
 
     /**
      * A szabadság hosszát állítja be (hány munkanapig tart)
-     * @param szabiHossza 
+     * @param szabiHossza szabadság hossza
      */
     public void setSzabiHossza(int szabiHossza) {
         this.szabiHossza = szabiHossza;

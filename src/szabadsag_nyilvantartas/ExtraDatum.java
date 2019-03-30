@@ -30,15 +30,16 @@ public class ExtraDatum {
         setTipus(ertek);
     }
     /**
-     * @return Az extra nap sorszámát adja vissza
+     * Az extranap sorszámát adja vissza
+     * @return Az extra nap sorszámát
      */
     public int getId() {
         return id;
     }
     
     /**
-     * Az egyedi sorszámot állítja be
-     * @param id 
+     * Az extranap egyedi sorszámát állítja be
+     * @param id extra nap sorszáma
      */
     public void setId(int id) {
         this.id = id;
@@ -57,7 +58,7 @@ public class ExtraDatum {
     }
     /**
      * Az extra nap dátumát adja vissza
-     * @return 
+     * @return a nap dátuma
      */
     public String getDatum() {
         return datum;
@@ -65,7 +66,7 @@ public class ExtraDatum {
 
     /**
      * A datum ként kapott dátumot állítja be az adott extra naphoz
-     * @param datum 
+     * @param datum Az extranap dátuma
      */
     public void setDatum(String datum) {
         this.datum = datum;

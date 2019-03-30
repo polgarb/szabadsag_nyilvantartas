@@ -6,7 +6,6 @@
 package szabadsag_nyilvantartas;
 
 import java.awt.Desktop;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 import java.time.LocalDate;
@@ -179,7 +178,6 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     void ujSzabadsag() {
-        //try {
         String a = cbNev.getValue();
         if (a == null) {
             ertesites("Hibás Név", "Nem lett név kíválasztva");
@@ -197,11 +195,6 @@ public class FXMLDocumentController implements Initializable {
             dolgozoDB.dolgozo_lista(tblDolgozok.getItems(), cbNev.getItems());
 
         }
-
-        //} catch (Exception e) {
-        //    ertesites("Hibás Név", "Nem lett név kíválasztva");
-        //    cbNev.requestFocus();
-        //}
     }
 
     @FXML
