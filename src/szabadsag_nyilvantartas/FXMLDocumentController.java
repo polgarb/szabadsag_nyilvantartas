@@ -265,7 +265,7 @@ public class FXMLDocumentController implements Initializable {
         Optional<ButtonType> option = alert.showAndWait();
 
         if (option.isPresent()) {
-            Desktop.getDesktop().browse(new URI("http://www.nso.hu"));
+            Desktop.getDesktop().browse(new URI("https://polgarb.github.io/szabadsag_nyilvantartas/"));
         }
 
     }
