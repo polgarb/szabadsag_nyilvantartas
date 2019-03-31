@@ -102,7 +102,7 @@ public class ExtraDatum {
     
     /**
      * Az extra nap típusát állítja be
-     * @param tipus 
+     * @param tipus Vagy munkaszüneti nap vagy ledolgozás, áthelyezett munkanap
      */
     public void setTipus(String tipus) {
         this.tipus = tipus;
