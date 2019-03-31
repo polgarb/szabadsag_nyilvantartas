@@ -374,16 +374,15 @@ public class DB {
             ekp.setString(1, szabistart);
             ekp.setString(2, szabivege);
             ResultSet eredmeny = ekp.executeQuery();
-            if (eredmeny.next()) {
+            while (eredmeny.next()) {
                 if (!eredmeny.wasNull()) {
                     extranap += eredmeny.getInt(1);
-                    szabihossza += extranap;
                 }
             }
-
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        szabihossza += extranap;
         return szabihossza;
     }
 
