@@ -29,7 +29,8 @@ public class Szabadsag_nyilvantartas extends Application {
     }
 
     /**
-     * @param args the command line arguments
+     *
+     * @param args
      */
     public static void main(String[] args) {
         launch(args);
