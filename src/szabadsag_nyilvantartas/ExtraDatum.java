@@ -82,7 +82,7 @@ public class ExtraDatum {
     
     /**
      * Az extra nap értékét állítja be a típusban kapott string alapján
-     * @param tipus Ha munakszüneti nap akkor érték -1, ha más akkor +1
+     * @param tipus Ha munkaszüneti nap akkor érték -1, ha más akkor +1
      */
     public void setErtek(String tipus) {
         if (tipus.equals("Munkaszüneti nap")) {

@@ -113,7 +113,7 @@ public class Dolgozo {
     }
 
     /**
-     * A dolgozó éves szabadságait állítja be a kapott értékra
+     * A dolgozó éves szabadságait állítja be a kapott értékre
      * @param evesSzabadsag éves szabadság száma
      */
     public void setEvesSzabadsag(int evesSzabadsag) {

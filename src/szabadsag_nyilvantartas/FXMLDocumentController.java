@@ -23,7 +23,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
- *
+ * A grafikus megjelenítésért felelős osztály
  * @author Polgár Béla
  */
 public class FXMLDocumentController implements Initializable {

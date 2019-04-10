@@ -12,7 +12,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- *
+ * Kezdő osztály
  * @author Polgár Béla
  */
 public class Szabadsag_nyilvantartas extends Application {
