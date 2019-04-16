@@ -82,6 +82,11 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TableColumn<Szabadsag, Integer> oSzabiHossza;
 
+    
+    /**
+     * A Dolgozó fülön a Módosít gomb lenyomásakor lefutó metódus, ha van sor kijelölve, 
+     * akkor módosítja a dolgozó adatait (DB osztály dolgozo_modositas), ha nincs, akkor pedig hibaüzenetet küld. 
+     */
     @FXML
     void modositDolgozo() {
         int i = tblDolgozok.getSelectionModel().getSelectedIndex();
