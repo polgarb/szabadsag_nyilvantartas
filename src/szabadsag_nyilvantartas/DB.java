@@ -196,15 +196,30 @@ public class DB {
      * @param gyerekDB a dolgozó gyermekeinek száma
      */
     public void dolgozo_modositas(int id, String nev, String szuletesiDatum, int gyerekDB) {
+        //eddigi éves szabi lekérdezése
+        int eves = 0;
+        String sz = "SELECT eves_szabadsag FROM dolgozok WHERE id=?;";
+        try (Connection kapcs = DriverManager.getConnection(dbUrl, user, pass);
+               PreparedStatement ekp = kapcs.prepareStatement(sz)) {
+                ekp.setInt(1, id);
+                ResultSet eredmeny = ekp.executeQuery();
+                eredmeny.next();
+                eves = eredmeny.getInt(1);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        //Az éves szabadság változásának kiszámítása
+        int valtozas = EvesSzabiSzamitas(szuletesiDatum, gyerekDB)- eves;
         //dolgozói adatok modosítása
-        String s = "UPDATE dolgozok SET nev =?,szuletesi_datum=?,gyerekek_szama=?,eves_szabadsag=? WHERE id =?;";
+        String s = "UPDATE dolgozok SET nev =?,szuletesi_datum=?,gyerekek_szama=?,eves_szabadsag=?,maradek_szabadsag=maradek_szabadsag + ? WHERE id =?;";
         try (Connection kapcs = DriverManager.getConnection(dbUrl, user, pass);
                 PreparedStatement ekp = kapcs.prepareStatement(s)) {
             ekp.setString(1, nev);
             ekp.setString(2, szuletesiDatum);
             ekp.setInt(3, gyerekDB);
             ekp.setInt(4, EvesSzabiSzamitas(szuletesiDatum, gyerekDB));
-            ekp.setInt(5, id);
+            ekp.setInt(5, valtozas);
+            ekp.setInt(6, id);
             ekp.executeUpdate();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
