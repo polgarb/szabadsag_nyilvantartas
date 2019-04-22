@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1:3306
--- Létrehozás ideje: 2019. Már 31. 18:06
+-- Létrehozás ideje: 2019. Ápr 22. 18:57
 -- Kiszolgáló verziója: 5.7.24
 -- PHP verzió: 7.2.14
 
@@ -46,10 +46,10 @@ CREATE TABLE IF NOT EXISTS `dolgozok` (
 INSERT INTO `dolgozok` (`id`, `nev`, `szuletesi_datum`, `gyerekek_szama`, `eves_szabadsag`, `maradek_szabadsag`) VALUES
 (11, 'Albert Gyula', '1980-12-31', 3, 34, 0),
 (12, 'Bacsó Gabriella', '1991-09-24', 1, 24, 23),
-(13, 'Bán Béla', '1985-07-18', 2, 28, 28),
-(14, 'Birkás Lajos', '1959-01-19', 4, 37, 37),
-(15, 'Csángo Pál', '1967-07-14', 0, 30, 30),
-(16, 'Csontos Károly', '1958-08-12', 6, 37, 37),
+(13, 'Bán Béla', '1985-07-18', 2, 28, 24),
+(14, 'Birkás Lajos', '1959-01-19', 4, 37, 33),
+(15, 'Csángo Pál', '1967-07-14', 0, 30, 26),
+(16, 'Csontos Károly', '1958-08-12', 6, 37, 33),
 (17, 'Dénes László', '1990-05-30', 3, 29, 29),
 (18, 'Dobó Ernő', '1986-03-10', 2, 28, 28),
 (19, 'Érsek Márta', '1974-07-05', 2, 34, 34),
@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `szabadsagok` (
   `szabadsag_hossza` int(2) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `dolgozoid` (`dolgozoid`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4;
 
 --
 -- A tábla adatainak kiíratása `szabadsagok`
@@ -153,7 +153,13 @@ INSERT INTO `szabadsagok` (`id`, `dolgozoid`, `szabadsag_kezdete`, `szabadsag_ve
 (17, 11, '2019-04-01', '2019-04-14', 10),
 (18, 11, '2019-08-05', '2019-08-11', 6),
 (19, 12, '2019-03-04', '2019-03-04', 1),
-(20, 12, '2019-03-31', '2019-03-31', 0);
+(20, 12, '2019-03-31', '2019-03-31', 0),
+(21, 13, '2019-04-22', '2019-04-22', 0),
+(22, 13, '2019-04-20', '2019-04-21', 0),
+(23, 13, '2019-04-23', '2019-04-26', 4),
+(24, 14, '2019-04-22', '2019-04-26', 4),
+(25, 15, '2019-04-22', '2019-04-28', 4),
+(26, 16, '2019-04-19', '2019-04-28', 4);
 
 --
 -- Megkötések a kiírt táblákhoz

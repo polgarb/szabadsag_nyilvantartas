@@ -94,6 +94,7 @@ public class FXMLDocumentController implements Initializable {
             int id = tblDolgozok.getItems().get(i).getId();
             dolgozoDB.dolgozo_modositas(id, txtNev.getText(), dpSzulDatum.getValue().toString(), cbGyerekDB.getValue());
             dolgozoDB.dolgozo_lista(tblDolgozok.getItems(), cbNev.getItems());
+            szabadsagDB.szabadsag_lista(tblSzabadsagok.getItems());
             tblDolgozok.getSelectionModel().select(i);
         } else {
             ertesites("Hiba", "Nincs kiválasztva sor");
